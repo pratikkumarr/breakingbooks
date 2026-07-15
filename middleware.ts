@@ -74,7 +74,7 @@ export async function middleware(request: NextRequest) {
       error: "Proxy invocation failed", 
       details: error?.message || String(error),
       stack: error?.stack
-    }, { status: 500 });
+    }, { status: 200 });
   }
 }
 
