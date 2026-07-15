@@ -3,11 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
   try {
-    let supabaseResponse = NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
+    let supabaseResponse = NextResponse.next();
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -22,11 +18,7 @@ export async function proxy(request: NextRequest) {
               cookiesToSet.forEach(({ name, value, options }) => {
                 request.cookies.set({ name, value, ...options });
               });
-              supabaseResponse = NextResponse.next({
-                request: {
-        headers: request.headers,
-      },
-              });
+              supabaseResponse = NextResponse.next();
               cookiesToSet.forEach(({ name, value, options }) => {
                 supabaseResponse.cookies.set({ name, value, ...options });
               });
