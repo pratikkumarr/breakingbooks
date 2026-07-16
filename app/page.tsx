@@ -155,7 +155,7 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
           <h2 className="text-3xl font-bold tracking-tight text-foreground">About Breaking Books</h2>
           <p className="text-lg md:text-xl text-muted leading-relaxed">
-            Breaking Books is a completely free learning platform dedicated to helping you master CBSE Information Technology (Code 402) and Computer Science for Classes 9-12. We believe high-quality education should be accessible to everyone without paywalls or barriers.
+            Breaking Books is a completely free learning platform for CBSE students in Classes 9-12, covering Information Technology (Code 402/802) and Artificial Intelligence (Code 417/843). Whether you&apos;re starting IT fundamentals in Class 9 or working through the complete IT/AI curriculum in Class 12, every course is free — no paywalls, no barriers.
             <span className="block mt-4">
               <a href="https://www.youtube.com/@breakinngbooks" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">Subscribe to our YouTube channel</a> for video lessons and updates.
             </span>
