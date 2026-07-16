@@ -13,10 +13,6 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (user) {
-    return redirect("/dashboard");
-  }
-
   const { data: courses, error } = await supabase
     .from("courses")
     .select("id, slug, title, description, thumbnail_url")
@@ -31,46 +27,42 @@ export default async function Home() {
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
           Welcome to Breaking Books
         </h1>
-        <p className="text-xl md:text-2xl text-muted max-w-3xl leading-relaxed">
-          sidhi baat no bakwas
-        </p>
-        <div className="flex gap-4 mt-8">
+
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto px-4 sm:px-0">
           <Link 
             href="/courses" 
-            className="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-base font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-base font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
           >
             Browse Courses
           </Link>
-          <Link 
-            href="/signup" 
-            className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
-          >
-            Sign Up
-          </Link>
+          {!user ? (
+            <Link 
+              href="/signup" 
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
+            >
+              Sign Up
+            </Link>
+          ) : (
+            <Link 
+              href="/dashboard" 
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
+            >
+              My Courses
+            </Link>
+          )}
         </div>
       </section>
 
-      {/* How it Works Section */}
+      {/* About Section */}
       <section className="w-full bg-surface border-y border-border py-24 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground mb-16">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-            <div className="flex flex-col items-center p-8 bg-background rounded-xl border border-border hover:border-accent/50 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-surface border border-border flex items-center justify-center mb-6 text-2xl font-bold text-accent">1</div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Browse Courses</h3>
-              <p className="text-muted leading-relaxed">Find the right subject for your class, whether it's Information Technology (Code 402) or Computer Science.</p>
-            </div>
-            <div className="flex flex-col items-center p-8 bg-background rounded-xl border border-border hover:border-accent/50 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-surface border border-border flex items-center justify-center mb-6 text-2xl font-bold text-accent">2</div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Watch Lessons</h3>
-              <p className="text-muted leading-relaxed">Learn through our detailed, easy-to-understand lesson materials, practical exercises, and videos.</p>
-            </div>
-            <div className="flex flex-col items-center p-8 bg-background rounded-xl border border-border hover:border-accent/50 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-surface border border-border flex items-center justify-center mb-6 text-2xl font-bold text-accent">3</div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Track Progress</h3>
-              <p className="text-muted leading-relaxed">Sign up for a free account to track your completed lessons, save your progress, and pick up where you left off.</p>
-            </div>
-          </div>
+        <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">About Breaking Books</h2>
+          <p className="text-lg md:text-xl text-muted leading-relaxed">
+            Breaking Books is a completely free learning platform dedicated to helping you master CBSE Information Technology (Code 402) and Computer Science for Classes 9-12. We believe high-quality education should be accessible to everyone without paywalls or barriers.
+            <span className="block mt-4">
+              <a href="https://www.youtube.com/@breakinngbooks" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">Subscribe to our YouTube channel</a> for video lessons and updates.
+            </span>
+          </p>
         </div>
       </section>
 

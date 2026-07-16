@@ -11,7 +11,7 @@ type Lesson = {
   title: string;
   youtube_url: string;
   pdf_url: string;
-  duration: number;
+  duration_min: number;
   order_index: number;
 };
 
@@ -48,7 +48,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
       title: isEditing.title || "",
       youtube_url: isEditing.youtube_url || "",
       pdf_url: isEditing.pdf_url || "",
-      duration: isEditing.duration ? parseInt(isEditing.duration.toString()) : 0,
+      duration_min: isEditing.duration_min ? parseInt(isEditing.duration_min.toString()) : 0,
       order_index: isEditing.order_index ?? lessons.length,
     };
 
@@ -136,8 +136,8 @@ export function LessonsManager({ courseId }: { courseId: string }) {
               <input
                 type="number"
                 min="0"
-                value={isEditing.duration || ""}
-                onChange={(e) => setIsEditing({ ...isEditing, duration: parseInt(e.target.value) || 0 })}
+                value={isEditing.duration_min || ""}
+                onChange={(e) => setIsEditing({ ...isEditing, duration_min: parseInt(e.target.value) || 0 })}
                 className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
               />
             </div>
@@ -207,7 +207,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
                   </div>
                   <div>
                     <div className="font-medium text-[var(--foreground)]">{lesson.title}</div>
-                    <div className="text-xs text-[var(--muted)]">{lesson.duration || 0} mins</div>
+                    <div className="text-xs text-[var(--muted)]">{lesson.duration_min || 0} mins</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">

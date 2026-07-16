@@ -45,7 +45,7 @@ export default async function Navbar() {
           ) : (
             <>
               <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
-                Dashboard
+                My Courses
               </Link>
               {role === "admin" && (
                 <Link href="/admin" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
