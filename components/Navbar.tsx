@@ -25,7 +25,7 @@ export default async function Navbar() {
             <div className="flex items-center justify-center bg-surface border border-border p-1 rounded-full shadow-sm w-10 h-10 shrink-0">
               <img src="/Logo.png" alt="Breaking Books Logo" className="h-full w-full object-contain rounded-full" />
             </div>
-            <span className="hidden sm:inline">Breaking Books</span>
+            <span className="inline">Breaking Books</span>
           </Link>
           <div className="hidden sm:flex items-center gap-6">
             <Link href="/courses" className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200 min-h-[44px] flex items-center">

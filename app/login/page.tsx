@@ -58,7 +58,11 @@ export default async function Login(props: {
         </SubmitButton>
 
         {searchParams?.message && (
-          <p className="mt-4 p-4 bg-background text-foreground text-center text-sm border border-border rounded-md">
+          <p className={`mt-4 p-4 text-center text-sm rounded-md border ${
+            searchParams.message.includes('authenticate') || searchParams.message.includes('error') 
+              ? 'bg-red-500/10 border-red-500/20 text-red-500' 
+              : 'bg-background border-border text-foreground'
+          }`}>
             {searchParams.message}
           </p>
         )}

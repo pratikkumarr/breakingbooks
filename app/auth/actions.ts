@@ -31,7 +31,7 @@ export async function signup(formData: FormData) {
   const fullName = formData.get("fullName") as string;
   const classLevel = formData.get("classLevel") as string;
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -46,14 +46,23 @@ export async function signup(formData: FormData) {
     return redirect(`/signup?message=${encodeURIComponent(error.message)}`);
   }
 
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
+  if (data?.user && data.user.identities && data.user.identities.length === 0) {
+    return redirect(`/signup?error=already_registered`);
+  }
+
+  return redirect(`/signup?success=verification_sent`);
 }
 
 export async function resetPassword(formData: FormData) {
   const supabase = await createClient();
 
   const email = formData.get("email") as string;
+
+  const { data: userExists } = await supabase.rpc('check_user_exists', { lookup_email: email });
+
+  if (!userExists) {
+    return redirect("/forgot-password?error=user_not_registered");
+  }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/update-password`,

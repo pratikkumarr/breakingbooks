@@ -3,6 +3,7 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { TypewriterText } from "@/components/TypewriterText";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -24,8 +25,9 @@ export default async function Home() {
     <div className="flex-1 w-full flex flex-col items-center">
       {/* Hero Section */}
       <section className="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center text-center gap-6">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
-          Welcome to Breaking Books
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+          <span className="text-foreground">Welcome to </span>
+          <TypewriterText text="Breaking Books" className="text-accent" />
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto px-4 sm:px-0">

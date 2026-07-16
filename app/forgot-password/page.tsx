@@ -4,7 +4,7 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
 
 export default async function ForgotPassword(props: {
-  searchParams: Promise<{ message: string }>;
+  searchParams: Promise<{ message?: string, error?: string }>;
 }) {
   const searchParams = await props.searchParams;
 
@@ -32,9 +32,14 @@ export default async function ForgotPassword(props: {
         </SubmitButton>
 
         {searchParams?.message && (
-          <p className="mt-4 p-4 bg-background text-foreground text-center text-sm border border-border rounded-md">
+          <p className="mt-4 p-4 bg-green-500/10 border border-green-500/20 text-green-500 text-center text-sm rounded-md">
             {searchParams.message}
           </p>
+        )}
+        {searchParams?.error === "user_not_registered" && (
+          <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-center text-sm rounded-md">
+            User not registered. <Link href="/signup" className="underline font-medium hover:text-red-400">Please sign up instead.</Link>
+          </div>
         )}
       </form>
 
