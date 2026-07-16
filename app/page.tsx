@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
@@ -28,10 +29,10 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center text-center gap-6">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
-          Breaking Books
+          Welcome to Breaking Books
         </h1>
         <p className="text-xl md:text-2xl text-muted max-w-3xl leading-relaxed">
-          Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.
+          sidhi baat no bakwas
         </p>
         <div className="flex gap-4 mt-8">
           <Link 
@@ -88,8 +89,14 @@ export default async function Home() {
               className="flex flex-col bg-surface border border-border rounded-xl p-5 hover:border-accent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group"
             >
               {course.thumbnail_url ? (
-                <div className="w-full aspect-video mb-5 rounded-lg overflow-hidden shrink-0 border border-border">
-                  <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" />
+                <div className="w-full aspect-video mb-5 rounded-lg overflow-hidden shrink-0 border border-border relative">
+                  <Image 
+                    src={course.thumbnail_url} 
+                    alt={course.title} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" 
+                  />
                 </div>
               ) : (
                 <div className="w-full aspect-video mb-5 rounded-lg bg-background border border-border flex items-center justify-center shrink-0">

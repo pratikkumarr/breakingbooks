@@ -1,11 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import Image from "next/image";
 import { CourseFilters } from "@/components/CourseFilters";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Courses",
-  description: "Browse our catalog of professional edtech courses for CBSE IT and Computer Science.",
+  description: "Browse our catalog of professional courses for CBSE IT and Computer Science.",
 };
 
 export default async function CoursesList({
@@ -50,10 +51,10 @@ export default async function CoursesList({
   }
 
   return (
-    <div className="flex-1 w-full max-w-6xl mx-auto p-8 pt-20">
+    <div className="flex-1 w-full max-w-6xl mx-auto p-4 md:p-8 pt-10 md:pt-20">
       <div className="mb-10">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">All Courses</h1>
-        <p className="text-muted mt-2 text-lg">Browse our catalog of professional edtech courses.</p>
+        <p className="text-muted mt-2 text-lg">Browse our catalog of professional courses.</p>
       </div>
 
       <CourseFilters subjects={subjects} />
@@ -66,8 +67,14 @@ export default async function CoursesList({
             className="flex flex-col bg-surface border border-border rounded-lg p-6 hover:border-accent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group"
           >
             {course.thumbnail_url && (
-              <div className="w-full aspect-video mb-4 rounded-md overflow-hidden shrink-0 border border-border">
-                <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" />
+              <div className="w-full aspect-video mb-4 rounded-md overflow-hidden shrink-0 border border-border relative">
+                <Image 
+                  src={course.thumbnail_url} 
+                  alt={course.title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" 
+                />
               </div>
             )}
             <h2 className="text-xl font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-150">{course.title}</h2>

@@ -20,7 +20,7 @@ export default async function Signup(props: {
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2 mx-auto pt-12 pb-12">
       <div className="flex flex-col gap-2 mb-8 items-center text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Create an Account</h1>
-        <p className="text-sm text-muted">Join our edtech platform today</p>
+        <p className="text-sm text-muted">Join Breaking Books today</p>
       </div>
 
       <form className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-lg border border-border shadow-md">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { FileUpload } from "@/components/ui/file-upload";
 
@@ -148,7 +149,13 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
             <label className="block text-sm font-medium text-[var(--muted)] mb-1">Thumbnail</label>
             {formData.thumbnail_url ? (
               <div className="mb-2 relative w-full aspect-video rounded-md overflow-hidden border border-[var(--border)] group">
-                <img src={formData.thumbnail_url} alt="Thumbnail" className="w-full h-full object-cover" />
+                <Image 
+                  src={formData.thumbnail_url} 
+                  alt="Thumbnail" 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  className="object-cover" 
+                />
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <button 
                     type="button" 

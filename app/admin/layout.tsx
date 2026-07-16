@@ -26,44 +26,44 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[var(--background)]">
+    <div className="flex flex-col md:flex-row min-h-screen bg-[var(--background)]">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-[var(--border)] bg-[var(--surface)] p-6 flex flex-col">
-        <div className="mb-8">
+      <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--border)] bg-[var(--surface)] p-4 md:p-6 flex flex-col">
+        <div className="mb-4 md:mb-8">
           <Link href="/admin" className="text-xl font-bold text-[var(--foreground)] tracking-tight">
             Admin Panel
           </Link>
         </div>
 
-        <nav className="flex-1 space-y-2">
+        <nav className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-2 md:pb-0 flex-nowrap">
           <Link
             href="/admin"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
           >
             <LayoutDashboard size={18} />
             Dashboard
           </Link>
           <Link
             href="/admin/courses"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--foreground)] bg-[var(--background)] transition-colors"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--foreground)] bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
           >
             <BookOpen size={18} />
             Courses
           </Link>
           <Link
             href="/admin/users"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
           >
             <Users size={18} />
             Users
           </Link>
         </nav>
 
-        <div className="pt-4 border-t border-[var(--border)] mt-auto">
+        <div className="pt-4 border-t border-[var(--border)] mt-4 md:mt-auto">
           <form action="/auth/signout" method="POST">
             <button
               type="submit"
-              className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-red-400 hover:text-red-300 hover:bg-[var(--background)] transition-colors text-left"
+              className="flex items-center justify-center md:justify-start gap-3 px-3 py-2 w-full rounded-md text-red-400 hover:text-red-300 hover:bg-[var(--background)] transition-colors min-h-[44px]"
             >
               <LogOut size={18} />
               Sign Out

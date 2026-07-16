@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { logout } from "@/app/auth/actions";
+import { MobileNav } from "./MobileNav";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -17,46 +18,50 @@ export default async function Navbar() {
   }
 
   return (
-    <nav className="w-full border-b border-border bg-background sticky top-0 z-50">
+    <nav className="w-full border-b border-border bg-background sticky top-0 z-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold text-xl tracking-tight text-foreground flex items-center gap-2">
             <img src="/Logo.png" alt="Breaking Books Logo" className="h-8 w-auto object-contain" />
-            Breaking Books
+            <span className="hidden sm:inline">Breaking Books</span>
           </Link>
-          <Link href="/courses" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
-            Courses
-          </Link>
+          <div className="hidden sm:flex items-center gap-6">
+            <Link href="/courses" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
+              Courses
+            </Link>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="hidden sm:flex items-center gap-4">
           {!user ? (
             <>
-              <Link href="/login" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
+              <Link href="/login" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
                 Login
               </Link>
-              <Link href="/signup" className="text-sm font-medium bg-accent text-background px-4 py-2 rounded-md hover:opacity-90 transition-opacity">
+              <Link href="/signup" className="text-sm font-medium bg-accent text-background px-4 py-2 rounded-md hover:opacity-90 transition-opacity min-h-[44px] flex items-center">
                 Sign Up
               </Link>
             </>
           ) : (
             <>
-              <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
+              <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
                 Dashboard
               </Link>
               {role === "admin" && (
-                <Link href="/admin" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
+                <Link href="/admin" className="text-sm font-medium text-muted hover:text-foreground transition-colors min-h-[44px] flex items-center">
                   Admin
                 </Link>
               )}
               <form action={logout}>
-                <button type="submit" className="text-sm font-medium text-red-400 hover:text-red-300 transition-colors flex items-center gap-1">
+                <button type="submit" className="text-sm font-medium text-red-400 hover:text-red-300 transition-colors flex items-center gap-1 min-h-[44px]">
                   Log Out
                 </button>
               </form>
             </>
           )}
         </div>
+
+        <MobileNav user={user} role={role} />
       </div>
     </nav>
   );

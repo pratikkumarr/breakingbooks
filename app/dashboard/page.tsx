@@ -74,8 +74,8 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 max-w-5xl mx-auto p-4 md:p-8 pt-20">
-      <div className="flex justify-between items-center bg-surface p-6 rounded-lg border border-border shadow-sm">
+    <div className="flex-1 w-full flex flex-col gap-8 max-w-5xl mx-auto p-4 md:p-8 pt-10 md:pt-20">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface p-6 rounded-lg border border-border shadow-sm">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Welcome, {profile?.full_name || user.email}
@@ -85,7 +85,7 @@ export default async function Dashboard() {
           </p>
         </div>
         <form action={logout}>
-          <SubmitButton className="bg-transparent border border-border text-foreground hover:bg-border focus-visible:ring-offset-surface">
+          <SubmitButton className="bg-transparent border border-border text-foreground hover:bg-border focus-visible:ring-offset-surface min-h-[44px]">
             Log out
           </SubmitButton>
         </form>
@@ -130,7 +130,7 @@ export default async function Dashboard() {
                     
                     <Link 
                       href={`/courses/${course.slug}`}
-                      className="mt-6 w-full inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150"
+                      className="mt-6 w-full inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150 min-h-[44px]"
                     >
                       {progressPercent > 0 ? "Continue Course" : "Start Course"}
                     </Link>

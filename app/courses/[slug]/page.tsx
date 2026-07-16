@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { enrollInCourse } from "@/app/courses/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import type { Metadata } from "next";
@@ -87,8 +88,14 @@ export default async function CourseDetails(props: {
     <div className="flex-1 w-full max-w-4xl mx-auto p-8 pt-20">
       <div className="bg-surface border border-border rounded-lg p-8 mb-8 shadow-sm">
         {course.thumbnail_url && (
-          <div className="w-full aspect-video mb-6 rounded-md overflow-hidden border border-border">
-            <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover" />
+          <div className="w-full aspect-video mb-6 rounded-md overflow-hidden border border-border relative">
+            <Image 
+              src={course.thumbnail_url} 
+              alt={course.title} 
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover" 
+            />
           </div>
         )}
         <h1 className="text-3xl font-bold tracking-tight text-foreground">{course.title}</h1>

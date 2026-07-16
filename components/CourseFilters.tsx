@@ -40,25 +40,25 @@ function FiltersContent({ subjects }: { subjects: string[] }) {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-surface p-4 rounded-lg border border-border items-center">
+    <div className="flex flex-col lg:flex-row gap-4 mb-8 bg-surface p-4 rounded-lg border border-border items-start lg:items-center">
       <form onSubmit={handleSearchSubmit} className="flex-1 flex gap-2 w-full">
         <input 
           type="text" 
           placeholder="Search courses..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors"
+          className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors min-h-[44px]"
         />
-        <button type="submit" className="bg-accent text-background px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity">
+        <button type="submit" className="bg-accent text-background px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity min-h-[44px]">
           Search
         </button>
       </form>
       
-      <div className="flex gap-4 w-full sm:w-auto">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full lg:w-auto">
         <select 
           value={classLevel} 
           onChange={handleClassChange}
-          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 sm:flex-none"
+          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 lg:flex-none min-h-[44px]"
         >
           <option value="all">All Classes</option>
           <option value="9">Class 9</option>
@@ -70,7 +70,7 @@ function FiltersContent({ subjects }: { subjects: string[] }) {
         <select 
           value={subject} 
           onChange={handleSubjectChange}
-          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 sm:flex-none min-w-[140px]"
+          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 lg:flex-none sm:min-w-[140px] min-h-[44px]"
         >
           <option value="all">All Subjects</option>
           {subjects.map((sub) => (
