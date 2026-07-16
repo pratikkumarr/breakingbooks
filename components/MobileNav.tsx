@@ -22,6 +22,9 @@ export function MobileNav({ user, role }: { user: any, role: string | null }) {
           <Link href="/courses" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
             Courses
           </Link>
+          <Link href={user ? "/dashboard" : "/login"} onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md" title={!user ? "Log in to view your courses" : undefined}>
+            My Courses
+          </Link>
           
           <hr className="border-border" />
           
@@ -36,9 +39,6 @@ export function MobileNav({ user, role }: { user: any, role: string | null }) {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Link href="/dashboard" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
-                My Courses
-              </Link>
               {role === "admin" && (
                 <Link href="/admin" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
                   Admin

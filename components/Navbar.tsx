@@ -31,6 +31,9 @@ export default async function Navbar() {
             <Link href="/courses" className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200 min-h-[44px] flex items-center">
               Courses
             </Link>
+            <Link href={user ? "/dashboard" : "/login"} className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200 min-h-[44px] flex items-center" title={!user ? "Log in to view your courses" : undefined}>
+              My Courses
+            </Link>
           </div>
         </div>
 
@@ -46,9 +49,6 @@ export default async function Navbar() {
             </>
           ) : (
             <>
-              <Link href="/dashboard" className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200 min-h-[44px] flex items-center">
-                My Courses
-              </Link>
               {role === "admin" && (
                 <Link href="/admin" className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200 min-h-[44px] flex items-center">
                   Admin

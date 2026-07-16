@@ -109,7 +109,7 @@ export default async function LessonViewer(props: {
           <div className="bg-surface border border-border rounded-xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold tracking-tight text-foreground">{lesson.title}</h1>
             
-            {user && (
+            {user ? (
               <form action={handleToggleComplete} className="flex items-center">
                 <input type="hidden" name="completed" value={String(isCompleted)} />
                 <button
@@ -129,6 +129,15 @@ export default async function LessonViewer(props: {
                   )}
                 </button>
               </form>
+            ) : (
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md min-h-[44px] border border-border bg-background hover:bg-surface text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200 cursor-pointer"
+                title="Log in to track your progress"
+              >
+                <Circle className="w-5 h-5 text-muted" />
+                <span className="text-foreground">Mark Complete</span>
+              </Link>
             )}
           </div>
         </div>

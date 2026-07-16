@@ -23,7 +23,7 @@ export function TypewriterText({ text, className }: { text: string, className?: 
 
   return (
     <span className={className}>
-      {displayedText}
+      <span className="underline decoration-current underline-offset-[20px] decoration-[5px]">{displayedText}</span>
       <span className="invisible">{text.substring(displayedText.length)}</span>
     </span>
   );

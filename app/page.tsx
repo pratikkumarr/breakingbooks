@@ -22,15 +22,28 @@ export default async function Home() {
     .limit(4);
 
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
+    <div className="flex-1 w-full flex flex-col items-center relative">
+      {/* Absolute Ambient Background Texture starting from the top */}
+      <div className="absolute top-0 inset-x-0 h-[700px] md:h-[800px] z-[-1] overflow-hidden pointer-events-none select-none">
+        <Image 
+          src="/homepage-banner.png" 
+          alt="Breaking Books Ambient Texture" 
+          fill
+          priority
+          className="object-cover object-top opacity-15"
+        />
+        {/* Gradient overlay to smoothly taper the image into the background color */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background" />
+      </div>
+
       {/* Hero Section */}
       <section className="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center text-center gap-6">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight z-10 relative">
           <span className="text-foreground">Welcome to </span>
-          <TypewriterText text="Breaking Books" className="text-accent" />
+          <TypewriterText text="Breaking Books!" className="text-accent" />
         </h1>
 
-        <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto px-4 sm:px-0">
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto px-4 sm:px-0 z-10 relative">
           <Link 
             href="/courses" 
             className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-base font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 min-h-[44px]"
@@ -46,12 +59,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Recent Courses Section */}
-      <section className="w-full max-w-6xl px-6 py-12 md:py-24 flex flex-col items-center">
-        <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4">Recently Published</h2>
-          <p className="text-muted text-lg max-w-2xl mx-auto">Check out the latest additions to our curriculum and start learning today.</p>
-        </div>
+          {/* Recent Courses Section */}
+          <section className="w-full max-w-6xl px-6 pb-12 md:pb-24 flex flex-col items-center">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4">Recently Published</h2>
+              <p className="text-muted text-lg max-w-2xl mx-auto">Check out the latest additions to our curriculum and start learning today.</p>
+            </div>
         
         <div className="flex md:grid overflow-x-auto snap-x snap-mandatory md:grid-cols-2 lg:grid-cols-4 gap-6 w-full pb-6 md:pb-0">
           {courses?.map((course) => (
@@ -112,6 +125,7 @@ export default async function Home() {
           </div>
         )}
       </section>
+
 
       {/* About Section */}
       <section className="w-full bg-surface border-y border-border py-24 px-6">

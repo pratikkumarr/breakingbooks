@@ -29,24 +29,7 @@ export default async function ContactPage() {
         </p>
       </div>
 
-      {!user ? (
-        <div className="bg-surface border border-border rounded-lg p-10 text-center shadow-sm">
-          <h2 className="text-xl font-semibold text-foreground mb-4">
-            Log In Required
-          </h2>
-          <p className="text-muted mb-6">
-            You must be logged in to send us a message. This helps us ensure we can get back to you reliably.
-          </p>
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-background hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          >
-            Log in to contact us
-          </Link>
-        </div>
-      ) : (
-        <ContactForm initialName={initialName} />
-      )}
+      <ContactForm initialName={initialName} isLoggedIn={!!user} />
     </div>
   );
 }

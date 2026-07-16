@@ -4,11 +4,14 @@ import { useActionState } from "react";
 import { submitContactForm } from "./actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export default function ContactForm({
   initialName,
+  isLoggedIn = true,
 }: {
   initialName: string;
+  isLoggedIn?: boolean;
 }) {
   const [state, formAction] = useActionState(submitContactForm, { success: false, error: null });
 
@@ -30,7 +33,7 @@ export default function ContactForm({
   }
 
   return (
-    <form action={formAction} className="bg-surface border border-border rounded-lg p-8 shadow-sm flex flex-col gap-6">
+    <form action={isLoggedIn ? formAction : undefined} className="bg-surface border border-border rounded-lg p-8 shadow-sm flex flex-col gap-6">
       {state.error && (
         <div className="bg-background text-red-500 text-sm border border-red-500/20 p-4 rounded-md">
           {state.error}
@@ -61,9 +64,18 @@ export default function ContactForm({
         />
       </div>
 
-      <SubmitButton pendingText="Sending...">
-        Send Message
-      </SubmitButton>
+      {isLoggedIn ? (
+        <SubmitButton pendingText="Sending...">
+          Send Message
+        </SubmitButton>
+      ) : (
+        <Link
+          href="/login"
+          className="inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background text-center w-full min-h-[40px]"
+        >
+          Log in to send message
+        </Link>
+      )}
     </form>
   );
 }
