@@ -62,8 +62,8 @@ export default async function Home() {
           {/* Recent Courses Section */}
           <section className="w-full max-w-6xl px-6 pb-12 md:pb-24 flex flex-col items-center">
             <div className="text-center mb-10 md:mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4">Recently Published</h2>
-              <p className="text-muted text-lg max-w-2xl mx-auto">Check out the latest additions to our curriculum and start learning today.</p>
+              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4 underline decoration-accent underline-offset-[12px] decoration-4">New Courses</h2>
+              <p className="text-muted text-lg max-w-2xl mx-auto">Recently added to Breaking Books.</p>
             </div>
         
         <div className="flex md:grid overflow-x-auto snap-x snap-mandatory md:grid-cols-2 lg:grid-cols-4 gap-6 w-full pb-6 md:pb-0">
