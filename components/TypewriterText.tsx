@@ -23,7 +23,21 @@ export function TypewriterText({ text, className }: { text: string, className?: 
 
   return (
     <span className={className}>
-      <span className="underline decoration-current underline-offset-[20px] decoration-[5px]">{displayedText}</span>
+      {(() => {
+        const spaceIndex = text.indexOf(' ');
+        const firstWordLen = spaceIndex === -1 ? text.length : spaceIndex + 1;
+        
+        if (displayedText.length <= firstWordLen) {
+          return <span className="max-md:no-underline underline decoration-current underline-offset-[20px] decoration-[5px]">{displayedText}</span>;
+        } else {
+          return (
+            <>
+              <span className="max-md:no-underline underline decoration-current underline-offset-[20px] decoration-[5px]">{displayedText.substring(0, firstWordLen)}</span>
+              <span className="underline decoration-current underline-offset-[20px] decoration-[5px]">{displayedText.substring(firstWordLen)}</span>
+            </>
+          );
+        }
+      })()}
       <span className="invisible">{text.substring(displayedText.length)}</span>
     </span>
   );

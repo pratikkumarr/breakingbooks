@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import { TypewriterText } from "@/components/TypewriterText";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Home | Breaking Books",
   description: "Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.",
 };
 
