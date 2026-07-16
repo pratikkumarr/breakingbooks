@@ -1,40 +1,28 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  console.log('SUPABASE_URL exists:', !!process.env.NEXT_PUBLIC_SUPABASE_URL);
-  console.log('SUPABASE_ANON_KEY exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  const { pathname } = request.nextUrl;
 
-  try {
-    let supabaseResponse = NextResponse.next({ request: { headers: request.headers } });
+  // Lightweight check for Supabase auth cookie
+  const hasAuthCookie = request.cookies.getAll().some(
+    (cookie) => cookie.name.startsWith("sb-") && cookie.name.endsWith("-auth-token")
+  );
 
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() { return request.cookies.getAll(); },
-          setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) => {
-                request.cookies.set({ name, value, ...options });
-              });
-              supabaseResponse = NextResponse.next({ request: { headers: request.headers } });
-              cookiesToSet.forEach(({ name, value, options }) => {
-                supabaseResponse.cookies.set({ name, value, ...options });
-              });
-            } catch (error) {}
-          },
-        },
-      }
-    );
-
-    await supabase.auth.getUser();
-    return supabaseResponse;
-  } catch (error) {
-    console.error('MIDDLEWARE ERROR:', error);
-    throw error;
+  // Protected routes
+  if ((pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) && !hasAuthCookie) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    return NextResponse.redirect(loginUrl);
   }
+
+  // Redirect authenticated users away from login/signup
+  if ((pathname.startsWith("/login") || pathname.startsWith("/signup")) && hasAuthCookie) {
+    const dashboardUrl = request.nextUrl.clone();
+    dashboardUrl.pathname = "/dashboard";
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
