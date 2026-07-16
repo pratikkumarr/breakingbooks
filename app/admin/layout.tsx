@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { BookOpen, LayoutDashboard, Users, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { AdminNav } from "./admin-nav";
 
 export default async function AdminLayout({
   children,
@@ -35,29 +36,7 @@ export default async function AdminLayout({
           </Link>
         </div>
 
-        <nav className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-2 md:pb-0 flex-nowrap">
-          <Link
-            href="/admin"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
-          >
-            <LayoutDashboard size={18} />
-            Dashboard
-          </Link>
-          <Link
-            href="/admin/courses"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--foreground)] bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
-          >
-            <BookOpen size={18} />
-            Courses
-          </Link>
-          <Link
-            href="/admin/users"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
-          >
-            <Users size={18} />
-            Users
-          </Link>
-        </nav>
+        <AdminNav />
 
         <div className="pt-4 border-t border-[var(--border)] mt-4 md:mt-auto">
           <form action="/auth/signout" method="POST">
