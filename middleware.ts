@@ -15,13 +15,15 @@ export async function middleware(request: NextRequest) {
         cookies: {
           getAll() { return request.cookies.getAll(); },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              request.cookies.set({ name, value, ...options });
-            });
-            supabaseResponse = NextResponse.next({ request: { headers: request.headers } });
-            cookiesToSet.forEach(({ name, value, options }) => {
-              supabaseResponse.cookies.set({ name, value, ...options });
-            });
+            try {
+              cookiesToSet.forEach(({ name, value, options }) => {
+                request.cookies.set({ name, value, ...options });
+              });
+              supabaseResponse = NextResponse.next({ request: { headers: request.headers } });
+              cookiesToSet.forEach(({ name, value, options }) => {
+                supabaseResponse.cookies.set({ name, value, ...options });
+              });
+            } catch (error) {}
           },
         },
       }
@@ -36,5 +38,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  runtime: "nodejs",
   matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
 };
