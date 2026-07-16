@@ -14,12 +14,35 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: courses, error } = await supabase
+  let { data: courses, error } = await supabase
     .from("courses")
     .select("id, slug, title, description, thumbnail_url, subject, class_level")
     .eq("published", true)
+    .eq("featured", true)
     .order("created_at", { ascending: false })
     .limit(4);
+
+  // Fallback to recent published courses to fill remaining slots
+  if (!error && (!courses || courses.length < 4)) {
+    const featuredIds = courses ? courses.map((c) => c.id) : [];
+    const limit = 4 - (courses ? courses.length : 0);
+    
+    let query = supabase
+      .from("courses")
+      .select("id, slug, title, description, thumbnail_url, subject, class_level")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (featuredIds.length > 0) {
+      query = query.not("id", "in", `(${featuredIds.join(",")})`);
+    }
+
+    const { data: recentCourses } = await query;
+    if (recentCourses) {
+      courses = [...(courses || []), ...recentCourses];
+    }
+  }
 
   return (
     <div className="flex-1 w-full flex flex-col items-center relative">
@@ -62,8 +85,8 @@ export default async function Home() {
           {/* Recent Courses Section */}
           <section className="w-full max-w-6xl px-6 pb-12 md:pb-24 flex flex-col items-center">
             <div className="text-center mb-10 md:mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4 underline decoration-accent underline-offset-[12px] decoration-4">New Courses</h2>
-              <p className="text-muted text-lg max-w-2xl mx-auto">Recently added to Breaking Books.</p>
+              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4 underline decoration-accent underline-offset-[12px] decoration-4">Featured Courses</h2>
+              <p className="text-muted text-lg max-w-2xl mx-auto">Our top picks to accelerate your learning.</p>
             </div>
         
         <div className="flex md:grid overflow-x-auto snap-x snap-mandatory md:grid-cols-2 lg:grid-cols-4 gap-6 w-full pb-6 md:pb-0">

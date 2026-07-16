@@ -14,6 +14,7 @@ type Course = {
   class_level: string;
   subject: string;
   published: boolean;
+  featured: boolean;
   thumbnail_url: string;
 };
 
@@ -27,6 +28,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
       class_level: "",
       subject: "",
       published: false,
+      featured: false,
       thumbnail_url: "",
     }
   );
@@ -63,6 +65,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
       class_level: formData.class_level,
       subject: formData.subject,
       published: formData.published,
+      featured: formData.featured,
       thumbnail_url: formData.thumbnail_url,
     };
 
@@ -184,17 +187,32 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
             />
           </div>
 
-          <div className="flex items-center gap-2 pt-2">
-            <input
-              type="checkbox"
-              id="published"
-              checked={formData.published || false}
-              onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-              className="w-4 h-4 rounded border-[var(--border)] text-[var(--accent)] focus:ring-[var(--accent)] focus:ring-offset-[var(--background)] bg-[var(--background)] accent-[var(--accent)]"
-            />
-            <label htmlFor="published" className="text-sm font-medium text-[var(--foreground)]">
-              Published
-            </label>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="published"
+                checked={formData.published || false}
+                onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                className="w-4 h-4 rounded border-[var(--border)] text-[var(--accent)] focus:ring-[var(--accent)] focus:ring-offset-[var(--background)] bg-[var(--background)] accent-[var(--accent)]"
+              />
+              <label htmlFor="published" className="text-sm font-medium text-[var(--foreground)]">
+                Published
+              </label>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={formData.featured || false}
+                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                className="w-4 h-4 rounded border-[var(--border)] text-[var(--accent)] focus:ring-[var(--accent)] focus:ring-offset-[var(--background)] bg-[var(--background)] accent-[var(--accent)]"
+              />
+              <label htmlFor="featured" className="text-sm font-medium text-[var(--foreground)]">
+                Featured Course
+              </label>
+            </div>
           </div>
         </div>
       </div>
