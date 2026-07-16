@@ -1,13 +1,49 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { CourseFilters } from "@/components/CourseFilters";
+import type { Metadata } from "next";
 
-export default async function CoursesList() {
+export const metadata: Metadata = {
+  title: "Courses",
+  description: "Browse our catalog of professional edtech courses for CBSE IT and Computer Science.",
+};
+
+export default async function CoursesList({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const supabase = await createClient();
+  const params = await searchParams;
 
-  const { data: courses, error } = await supabase
+  const classLevel = typeof params.class === "string" ? params.class : undefined;
+  const subject = typeof params.subject === "string" ? params.subject : undefined;
+  const q = typeof params.q === "string" ? params.q : undefined;
+
+  // Fetch unique subjects for the filter dropdown
+  const { data: subjectData } = await supabase
+    .from("courses")
+    .select("subject")
+    .eq("published", true);
+
+  const subjects = Array.from(new Set(subjectData?.map(d => d.subject).filter(Boolean) || []));
+
+  let query = supabase
     .from("courses")
     .select("id, slug, title, description, thumbnail_url")
     .eq("published", true);
+
+  if (classLevel && classLevel !== "all") {
+    query = query.eq("class_level", classLevel);
+  }
+  if (subject && subject !== "all") {
+    query = query.eq("subject", subject);
+  }
+  if (q) {
+    query = query.ilike("title", `%${q}%`);
+  }
+
+  const { data: courses, error } = await query;
 
   if (error) {
     console.error("Error fetching courses:", error);
@@ -19,6 +55,8 @@ export default async function CoursesList() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground">All Courses</h1>
         <p className="text-muted mt-2 text-lg">Browse our catalog of professional edtech courses.</p>
       </div>
+
+      <CourseFilters subjects={subjects} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses?.map((course) => (
@@ -39,7 +77,7 @@ export default async function CoursesList() {
         ))}
         {(!courses || courses.length === 0) && (
           <div className="col-span-full py-12 text-center text-muted bg-surface rounded-lg border border-border border-dashed">
-            No courses are currently available. Check back later!
+            No courses match your filters. Try adjusting your search!
           </div>
         )}
       </div>

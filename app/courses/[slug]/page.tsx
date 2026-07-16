@@ -3,6 +3,32 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { enrollInCourse } from "@/app/courses/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
+import type { Metadata } from "next";
+
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
+  const slug = params.slug;
+  const supabase = await createClient();
+
+  const { data: course } = await supabase
+    .from("courses")
+    .select("title, description")
+    .eq("slug", slug)
+    .single();
+
+  if (!course) {
+    return {
+      title: "Course Not Found",
+    };
+  }
+
+  return {
+    title: course.title,
+    description: course.description?.slice(0, 160) || "Course details",
+  };
+}
 
 export default async function CourseDetails(props: {
   params: Promise<{ slug: string }>;

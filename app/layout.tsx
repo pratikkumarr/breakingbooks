@@ -8,9 +8,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Breaking Books",
-  description: "by Pratik Attri",
+  title: {
+    template: "%s | Breaking Books",
+    default: "Breaking Books",
+  },
+  description: "Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.",
+  icons: {
+    icon: "/Logo.png",
+  },
 };
+
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -22,7 +31,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <Navbar />
+        <main className="flex-1 flex flex-col">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }
