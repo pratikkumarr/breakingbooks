@@ -23,7 +23,7 @@ export default async function Login(props: {
         <p className="text-sm text-muted">Log in to your Breaking Books account</p>
       </div>
 
-      <form className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-lg border border-border shadow-md">
+      <form className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-xl border border-border shadow-md">
         <div className="flex flex-col gap-4">
           <Input
             id="email"

@@ -110,7 +110,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
         {!isEditing && (
           <button
             onClick={() => setIsEditing({})}
-            className="flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground)] px-3 py-1.5 rounded-md hover:bg-[var(--background)] transition-colors text-sm font-medium"
+            className="flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground)] px-3 py-1.5 rounded-md hover:bg-[var(--background)] transition-colors duration-200 text-sm font-medium"
           >
             <Plus size={16} />
             Add Lesson
@@ -128,7 +128,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
                 type="text"
                 value={isEditing.title || ""}
                 onChange={(e) => setIsEditing({ ...isEditing, title: e.target.value })}
-                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
               />
             </div>
             <div>
@@ -138,7 +138,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
                 min="0"
                 value={isEditing.duration_min || ""}
                 onChange={(e) => setIsEditing({ ...isEditing, duration_min: parseInt(e.target.value) || 0 })}
-                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
               />
             </div>
             <div className="md:col-span-2">
@@ -147,7 +147,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
                 type="url"
                 value={isEditing.youtube_url || ""}
                 onChange={(e) => setIsEditing({ ...isEditing, youtube_url: e.target.value })}
-                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
               />
             </div>
             <div className="md:col-span-2">
@@ -174,14 +174,14 @@ export function LessonsManager({ courseId }: { courseId: string }) {
             <button
               type="button"
               onClick={() => setIsEditing(null)}
-              className="px-4 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+              className="px-4 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 py-2 text-sm bg-[var(--accent)] text-black font-medium rounded-md hover:bg-opacity-90 transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-sm bg-accent text-background font-medium rounded-md hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50"
             >
               {isSaving ? "Saving..." : isEditing.id ? "Save Changes" : "Add Lesson"}
             </button>
@@ -195,7 +195,7 @@ export function LessonsManager({ courseId }: { courseId: string }) {
             </div>
           ) : (
             lessons.map((lesson, index) => (
-              <div key={lesson.id} className="flex items-center justify-between p-3 bg-[var(--surface)] border border-[var(--border)] rounded-md group hover:border-[var(--muted)] transition-colors">
+              <div key={lesson.id} className="flex items-center justify-between p-3 bg-[var(--surface)] border border-[var(--border)] rounded-md group hover:border-[var(--muted)] transition-colors duration-200">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => moveLesson(index, 'up')} disabled={index === 0} className="text-[var(--muted)] hover:text-[var(--foreground)] disabled:opacity-30">
@@ -211,10 +211,10 @@ export function LessonsManager({ courseId }: { courseId: string }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setIsEditing(lesson)} className="p-1.5 text-[var(--muted)] hover:text-[var(--accent)] transition-colors" title="Edit">
+                  <button onClick={() => setIsEditing(lesson)} className="p-1.5 text-[var(--muted)] hover:text-[var(--accent)] transition-colors duration-200" title="Edit">
                     <Edit size={16} />
                   </button>
-                  <button onClick={() => handleDelete(lesson.id)} className="p-1.5 text-[var(--muted)] hover:text-red-500 transition-colors" title="Delete">
+                  <button onClick={() => handleDelete(lesson.id)} className="p-1.5 text-[var(--muted)] hover:text-red-500 transition-colors duration-200" title="Delete">
                     <Trash2 size={16} />
                   </button>
                 </div>

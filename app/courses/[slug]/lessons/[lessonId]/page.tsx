@@ -71,7 +71,7 @@ export default async function LessonViewer(props: {
       <div className="mb-6">
         <Link 
           href={`/courses/${slug}`}
-          className="inline-flex items-center text-sm font-medium text-muted hover:text-accent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-sm"
+          className="inline-flex items-center text-sm font-medium text-muted hover:text-accent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-sm"
         >
           <ArrowLeft className="w-4 h-4 mr-1" />
           Back to Course
@@ -80,7 +80,7 @@ export default async function LessonViewer(props: {
 
       <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-1 flex flex-col gap-6">
-          <div className="aspect-video w-full rounded-lg overflow-hidden bg-background border border-border shadow-md relative group">
+          <div className="aspect-video w-full rounded-xl overflow-hidden bg-background border border-border shadow-md relative group">
             {youtubeId ? (
               <a 
                 href={lesson.youtube_url} 
@@ -106,7 +106,7 @@ export default async function LessonViewer(props: {
             )}
           </div>
 
-          <div className="bg-surface border border-border rounded-lg p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-surface border border-border rounded-xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold tracking-tight text-foreground">{lesson.title}</h1>
             
             {user && (
@@ -114,7 +114,7 @@ export default async function LessonViewer(props: {
                 <input type="hidden" name="completed" value={String(isCompleted)} />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border bg-background hover:bg-surface text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md min-h-[44px] border border-border bg-background hover:bg-surface text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200 cursor-pointer"
                 >
                   {isCompleted ? (
                     <>
@@ -135,19 +135,19 @@ export default async function LessonViewer(props: {
 
         {lesson.pdf_url && (
           <div className="w-full md:w-80 shrink-0">
-            <div className="bg-surface border border-border rounded-lg p-6 sticky top-24">
+            <div className="bg-surface border border-border rounded-xl p-6 sticky top-24">
               <h2 className="text-lg font-semibold text-foreground mb-4">Resources</h2>
               <a
                 href={lesson.pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 rounded-md border border-border bg-background hover:border-accent group transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="flex items-center gap-3 p-3 rounded-md border border-border bg-background hover:border-accent group transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                <div className="flex items-center justify-center w-10 h-10 rounded bg-surface border border-border group-hover:border-accent group-hover:text-accent text-muted transition-colors duration-150">
+                <div className="flex items-center justify-center w-10 h-10 rounded bg-surface border border-border group-hover:border-accent group-hover:text-accent text-muted transition-colors duration-200">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors duration-150">Lesson PDF</span>
+                  <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors duration-200">Lesson PDF</span>
                   <span className="text-xs text-muted">Download Resource</span>
                 </div>
               </a>

@@ -30,7 +30,7 @@ export function DeleteCourseButton({ id }: { id: string }) {
     <button
       onClick={handleDelete}
       disabled={isDeleting}
-      className="inline-flex items-center justify-center p-2 rounded-md text-[var(--muted)] hover:text-red-500 hover:bg-[var(--background)] transition-colors disabled:opacity-50"
+      className="inline-flex items-center justify-center p-2 rounded-md text-[var(--muted)] hover:text-red-500 hover:bg-[var(--background)] transition-colors duration-200 disabled:opacity-50"
       title="Delete course"
     >
       <Trash2 size={18} />

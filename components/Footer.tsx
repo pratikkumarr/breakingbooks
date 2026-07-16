@@ -26,10 +26,10 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} Breaking Books. All rights reserved.
         </p>
         <div className="flex items-center gap-6">
-          <a href="https://www.youtube.com/@breakinngbooks" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[#FF0000] transition-colors" aria-label="YouTube Channel">
+          <a href="https://www.youtube.com/@breakinngbooks" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[#FF0000] transition-colors duration-200" aria-label="YouTube Channel">
             <Youtube size={20} />
           </a>
-          <Link href="/contact" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
+          <Link href="/contact" className="text-sm font-medium text-muted hover:text-foreground transition-colors duration-200">
             Contact Us
           </Link>
         </div>

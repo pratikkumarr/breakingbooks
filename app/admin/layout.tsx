@@ -38,21 +38,21 @@ export default async function AdminLayout({
         <nav className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-2 md:pb-0 flex-nowrap">
           <Link
             href="/admin"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
           >
             <LayoutDashboard size={18} />
             Dashboard
           </Link>
           <Link
             href="/admin/courses"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--foreground)] bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--foreground)] bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
           >
             <BookOpen size={18} />
             Courses
           </Link>
           <Link
             href="/admin/users"
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors min-h-[44px] whitespace-nowrap"
+            className="flex items-center gap-3 px-3 py-2 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px] whitespace-nowrap"
           >
             <Users size={18} />
             Users
@@ -63,7 +63,7 @@ export default async function AdminLayout({
           <form action="/auth/signout" method="POST">
             <button
               type="submit"
-              className="flex items-center justify-center md:justify-start gap-3 px-3 py-2 w-full rounded-md text-red-400 hover:text-red-300 hover:bg-[var(--background)] transition-colors min-h-[44px]"
+              className="flex items-center justify-center md:justify-start gap-3 px-3 py-2 w-full rounded-md text-red-400 hover:text-red-300 hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px]"
             >
               <LogOut size={18} />
               Sign Out

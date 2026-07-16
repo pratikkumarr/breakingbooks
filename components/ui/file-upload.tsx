@@ -54,7 +54,7 @@ export function FileUpload({ bucket, onUploadSuccess, accept = "image/*", classN
 
   return (
     <div className={`relative ${className}`}>
-      <label className="flex flex-col items-center justify-center w-full h-32 border border-dashed border-[var(--border)] rounded-md cursor-pointer bg-[var(--surface)] hover:border-[var(--muted)] transition-colors">
+      <label className="flex flex-col items-center justify-center w-full h-32 border border-dashed border-[var(--border)] rounded-md cursor-pointer bg-[var(--surface)] hover:border-[var(--muted)] transition-colors duration-200">
         <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
           {isUploading ? (
             <Loader2 className="w-6 h-6 mb-2 text-[var(--accent)] animate-spin" />

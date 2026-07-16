@@ -47,7 +47,7 @@ function FiltersContent({ subjects }: { subjects: string[] }) {
           placeholder="Search courses..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors min-h-[44px]"
+          className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 min-h-[44px]"
         />
         <button type="submit" className="bg-accent text-background px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity min-h-[44px]">
           Search
@@ -58,7 +58,7 @@ function FiltersContent({ subjects }: { subjects: string[] }) {
         <select 
           value={classLevel} 
           onChange={handleClassChange}
-          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 lg:flex-none min-h-[44px]"
+          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 cursor-pointer flex-1 lg:flex-none min-h-[44px]"
         >
           <option value="all">All Classes</option>
           <option value="9">Class 9</option>
@@ -70,7 +70,7 @@ function FiltersContent({ subjects }: { subjects: string[] }) {
         <select 
           value={subject} 
           onChange={handleSubjectChange}
-          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors cursor-pointer flex-1 lg:flex-none sm:min-w-[140px] min-h-[44px]"
+          className="bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 cursor-pointer flex-1 lg:flex-none sm:min-w-[140px] min-h-[44px]"
         >
           <option value="all">All Subjects</option>
           {subjects.map((sub) => (

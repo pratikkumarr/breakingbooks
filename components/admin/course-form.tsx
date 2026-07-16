@@ -108,7 +108,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
               type="text"
               value={formData.title || ""}
               onChange={handleTitleChange}
-              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
             />
           </div>
 
@@ -119,7 +119,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
               type="text"
               value={formData.slug || ""}
               onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
             />
           </div>
 
@@ -129,7 +129,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
               type="text"
               value={formData.class_level || ""}
               onChange={(e) => setFormData({ ...formData, class_level: e.target.value })}
-              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
             />
           </div>
 
@@ -139,7 +139,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
               type="text"
               value={formData.subject || ""}
               onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors"
+              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
                   <button 
                     type="button" 
                     onClick={() => setFormData({ ...formData, thumbnail_url: "" })}
-                    className="text-white text-sm font-medium bg-red-500/80 px-3 py-1 rounded hover:bg-red-500 transition-colors"
+                    className="text-white text-sm font-medium bg-red-500/80 px-3 py-1 rounded hover:bg-red-500 transition-colors duration-200"
                   >
                     Remove
                   </button>
@@ -180,7 +180,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
               rows={4}
               value={formData.description || ""}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors resize-none"
+              className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200 resize-none"
             />
           </div>
 
@@ -203,7 +203,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-[var(--accent)] text-black px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors disabled:opacity-50"
+          className="bg-accent text-background px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50"
         >
           {isSubmitting ? "Saving..." : initialData?.id ? "Save Changes" : "Create Course"}
         </button>

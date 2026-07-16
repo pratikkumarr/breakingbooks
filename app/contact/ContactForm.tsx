@@ -21,7 +21,7 @@ export default function ContactForm({
         </p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-6 text-sm text-foreground font-medium hover:text-accent transition-colors duration-150"
+          className="mt-6 text-sm text-foreground font-medium hover:text-accent transition-colors duration-200"
         >
           Send another message
         </button>

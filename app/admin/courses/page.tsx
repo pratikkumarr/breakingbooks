@@ -16,7 +16,7 @@ export default async function AdminCoursesPage() {
         <h1 className="text-2xl font-bold text-[var(--foreground)]">Courses</h1>
         <Link
           href="/admin/courses/new"
-          className="flex items-center gap-2 bg-[var(--accent)] text-black px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors font-medium"
+          className="flex items-center gap-2 bg-accent text-background px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200 font-medium"
         >
           <Plus size={18} />
           New Course
@@ -42,7 +42,7 @@ export default async function AdminCoursesPage() {
               </tr>
             )}
             {courses?.map((course) => (
-              <tr key={course.id} className="border-b border-[var(--border)] last:border-0 hover:bg-[var(--background)] transition-colors">
+              <tr key={course.id} className="border-b border-[var(--border)] last:border-0 hover:bg-[var(--background)] transition-colors duration-200">
                 <td className="p-4">
                   <div className="font-medium text-[var(--foreground)]">{course.title}</div>
                   <div className="text-sm text-[var(--muted)]">{course.slug}</div>
@@ -62,7 +62,7 @@ export default async function AdminCoursesPage() {
                 <td className="p-4 text-right space-x-2">
                   <Link
                     href={`/admin/courses/${course.id}`}
-                    className="inline-flex items-center justify-center p-2 rounded-md text-[var(--muted)] hover:text-[var(--accent)] hover:bg-[var(--background)] transition-colors"
+                    className="inline-flex items-center justify-center p-2 rounded-md text-[var(--muted)] hover:text-[var(--accent)] hover:bg-[var(--background)] transition-colors duration-200"
                   >
                     <Edit size={18} />
                   </Link>

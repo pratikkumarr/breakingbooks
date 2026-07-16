@@ -23,13 +23,13 @@ export default function Error({
       <div className="flex gap-4">
         <button
           onClick={() => reset()}
-          className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-background hover:opacity-90 transition-all"
+          className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-background hover:opacity-90 transition-all duration-200"
         >
           Try again
         </button>
         <Link 
           href="/" 
-          className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-6 py-3 text-sm font-medium text-foreground hover:bg-surface transition-all"
+          className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-6 py-3 text-sm font-medium text-foreground hover:bg-surface transition-all duration-200"
         >
           Return Home
         </Link>

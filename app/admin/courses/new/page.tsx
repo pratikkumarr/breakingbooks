@@ -8,7 +8,7 @@ export default function NewCoursePage() {
       <div className="flex items-center gap-4">
         <Link
           href="/admin/courses"
-          className="p-2 rounded-md hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+          className="p-2 rounded-md hover:bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200"
         >
           <ArrowLeft size={20} />
         </Link>

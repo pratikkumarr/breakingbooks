@@ -15,7 +15,7 @@ export default async function Home() {
 
   const { data: courses, error } = await supabase
     .from("courses")
-    .select("id, slug, title, description, thumbnail_url")
+    .select("id, slug, title, description, thumbnail_url, subject, class_level")
     .eq("published", true)
     .order("created_at", { ascending: false })
     .limit(4);
@@ -31,25 +31,16 @@ export default async function Home() {
         <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto px-4 sm:px-0">
           <Link 
             href="/courses" 
-            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-base font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-base font-medium text-background hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 min-h-[44px]"
           >
             Browse Courses
           </Link>
-          {!user ? (
-            <Link 
-              href="/signup" 
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
-            >
-              Sign Up
-            </Link>
-          ) : (
-            <Link 
-              href="/dashboard" 
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
-            >
-              My Courses
-            </Link>
-          )}
+          <Link 
+            href="/dashboard" 
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 min-h-[44px]"
+          >
+            Dashboard
+          </Link>
         </div>
       </section>
 
@@ -65,7 +56,7 @@ export default async function Home() {
             <Link
               key={course.id}
               href={`/courses/${course.slug}`}
-              className="flex flex-col bg-surface border border-border rounded-xl p-5 hover:border-accent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group min-w-[280px] sm:min-w-[320px] md:min-w-0 shrink-0 snap-start"
+              className="flex flex-col bg-surface border border-border rounded-xl p-5 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group min-w-[280px] sm:min-w-[320px] md:min-w-0 shrink-0 snap-start"
             >
               {course.thumbnail_url ? (
                 <div className="w-full aspect-video mb-5 rounded-lg overflow-hidden shrink-0 border border-border relative">
@@ -82,9 +73,21 @@ export default async function Home() {
                   <span className="text-muted text-sm font-medium">No Thumbnail</span>
                 </div>
               )}
-              <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-accent transition-colors duration-150 line-clamp-2">{course.title}</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-200 line-clamp-2">{course.title}</h3>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {course.class_level && (
+                  <span className="inline-flex items-center rounded-full bg-background border border-border px-2 py-0.5 text-xs font-medium text-muted">
+                    Class {course.class_level}
+                  </span>
+                )}
+                {course.subject && (
+                  <span className="inline-flex items-center rounded-full bg-background border border-border px-2 py-0.5 text-xs font-medium text-muted">
+                    {course.subject}
+                  </span>
+                )}
+              </div>
               <p className="text-sm text-muted flex-1 line-clamp-3 leading-relaxed">{course.description}</p>
-              <div className="mt-6 text-sm font-medium text-accent flex items-center gap-1 group-hover:gap-2 transition-all">
+              <div className="mt-6 text-sm font-medium text-accent flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
                 View Course <span>&rarr;</span>
               </div>
             </Link>
@@ -100,7 +103,7 @@ export default async function Home() {
           <div className="mt-8 md:mt-12">
             <Link 
               href="/courses" 
-              className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all min-h-[44px]"
+              className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-8 py-3 text-base font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 min-h-[44px]"
             >
               View All Courses
             </Link>

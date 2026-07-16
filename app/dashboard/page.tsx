@@ -44,6 +44,8 @@ export default async function Dashboard() {
   }).filter(Boolean) || [];
   
   let courseProgressMap: Record<string, { total: number; completed: number }> = {};
+  let totalCourses = enrollments?.length || 0;
+  let totalLessonsCompleted = 0;
   
   if (courseIds.length > 0) {
     const { data: lessons } = await supabase
@@ -68,6 +70,7 @@ export default async function Dashboard() {
         courseProgressMap[lesson.course_id].total += 1;
         if (completedLessonIds.has(lesson.id)) {
           courseProgressMap[lesson.course_id].completed += 1;
+          totalLessonsCompleted += 1;
         }
       }
     });
@@ -75,7 +78,7 @@ export default async function Dashboard() {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8 max-w-5xl mx-auto p-4 md:p-8 pt-10 md:pt-20">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface p-6 rounded-lg border border-border shadow-sm">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface p-6 rounded-xl border border-border shadow-sm">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Welcome, {profile?.full_name || user.email}
@@ -84,20 +87,38 @@ export default async function Dashboard() {
             Class Level: {profile?.class_level || "Not specified"}
           </p>
         </div>
-        <form action={logout}>
-          <SubmitButton className="bg-transparent border border-border text-foreground hover:bg-border focus-visible:ring-offset-surface min-h-[44px]">
-            Log out
-          </SubmitButton>
-        </form>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          <Link href="/dashboard/profile" className="inline-flex items-center justify-center rounded-md border border-border bg-transparent px-4 py-2 text-sm font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-all duration-200 min-h-[44px]">
+            Edit Profile
+          </Link>
+          <form action={logout} className="w-full sm:w-auto">
+            <SubmitButton className="w-full sm:w-auto bg-transparent border border-border text-foreground hover:bg-border focus-visible:ring-offset-surface min-h-[44px]">
+              Log out
+            </SubmitButton>
+          </form>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-surface border border-border rounded-xl p-6 flex flex-col">
+          <span className="text-muted text-sm font-medium">Courses Enrolled</span>
+          <span className="text-3xl font-bold text-foreground mt-2">{totalCourses}</span>
+        </div>
+        <div className="bg-surface border border-border rounded-xl p-6 flex flex-col">
+          <span className="text-muted text-sm font-medium">Lessons Completed</span>
+          <span className="text-3xl font-bold text-foreground mt-2">{totalLessonsCompleted}</span>
+        </div>
       </div>
 
       <div>
         <h2 className="text-xl font-semibold text-foreground mb-6">Your Courses</h2>
         
         {(!enrollments || enrollments.length === 0) ? (
-          <div className="bg-surface p-8 rounded-lg border border-border text-center text-muted border-dashed">
-            You haven't enrolled in any courses yet. <br />
-            <Link href="/courses" className="text-accent hover:underline mt-2 inline-block font-medium">Browse available courses</Link>
+          <div className="bg-surface p-12 rounded-xl border border-border flex flex-col items-center text-center border-dashed">
+            <p className="text-muted text-lg mb-4">You haven't enrolled in any courses yet.</p>
+            <Link href="/courses" className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-2 text-sm font-medium text-background hover:opacity-90 transition-all duration-200 min-h-[44px]">
+              Browse Courses
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -112,7 +133,7 @@ export default async function Dashboard() {
               }
 
               return (
-                <div key={enrollment.id} className="bg-surface flex flex-col rounded-lg border border-border p-6 hover:border-accent transition-colors duration-150">
+                <div key={enrollment.id} className="bg-surface flex flex-col rounded-xl border border-border p-6 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-colors duration-200">
                   <h3 className="text-lg font-semibold text-foreground mb-1">{course.title}</h3>
                   <p className="text-sm text-muted line-clamp-2 mb-6 flex-1">{course.description}</p>
                   
@@ -123,14 +144,14 @@ export default async function Dashboard() {
                     </div>
                     <div className="w-full h-2 bg-background rounded-full overflow-hidden border border-border">
                       <div 
-                        className="h-full bg-accent transition-all duration-500 ease-in-out"
+                        className="h-full bg-accent animate-progress"
                         style={{ width: `${progressPercent}%` }}
                       />
                     </div>
                     
                     <Link 
                       href={`/courses/${course.slug}`}
-                      className="mt-6 w-full inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-150 min-h-[44px]"
+                      className="mt-6 w-full inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200 min-h-[44px]"
                     >
                       {progressPercent > 0 ? "Continue Course" : "Start Course"}
                     </Link>
