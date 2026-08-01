@@ -44,3 +44,6 @@
 - No "edtech" as a term anywhere in copy.
 - Homepage hero: "Welcome to [white]" / "Breaking Books [accent color]"
 - Name is a Breaking Bad reference — homage in name only, NOT in visual theme (copyright + audience-appropriateness concerns, deliberately decided against a full reskin).
+
+## TODO before enabling AdSense:
+update /privacy cookies section to accurately describe ad-related cookies/tracking, add a cookie consent banner if required for your audience/region, review AdSense's policies on sites primarily used by minors (CBSE Class 9-12 students — Google has specific requirements around ads on child-directed or mixed-audience content, must be reviewed before enabling).
