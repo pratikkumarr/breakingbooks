@@ -4,13 +4,17 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { TypewriterText } from "@/components/TypewriterText";
+import { Toast } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "Home | Breaking Books",
   description: "Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.",
 };
 
-export default async function Home() {
+export default async function Home(props: { searchParams?: Promise<{ verified?: string }> }) {
+  const searchParams = props.searchParams ? await props.searchParams : undefined;
+  const isVerified = searchParams?.verified === "true";
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -46,6 +50,7 @@ export default async function Home() {
 
   return (
     <div className="flex-1 w-full flex flex-col items-center relative">
+      {isVerified && <Toast message="Email verified! You're now logged in." />}
       {/* Absolute Ambient Background Texture starting from the top */}
       <div className="absolute top-0 inset-x-0 h-[700px] md:h-[800px] z-[-1] overflow-hidden pointer-events-none select-none">
         <Image 

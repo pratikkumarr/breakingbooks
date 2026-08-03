@@ -17,13 +17,17 @@ export async function GET(request: NextRequest) {
       token_hash,
     })
     if (!error) {
-      return NextResponse.redirect(new URL(next, request.url))
+      const redirectUrl = new URL(next, request.url)
+      redirectUrl.searchParams.set('verified', 'true')
+      return NextResponse.redirect(redirectUrl)
     }
   } else if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(new URL(next, request.url))
+      const redirectUrl = new URL(next, request.url)
+      redirectUrl.searchParams.set('verified', 'true')
+      return NextResponse.redirect(redirectUrl)
     }
   }
 
