@@ -39,6 +39,7 @@ export async function signup(formData: FormData) {
         full_name: fullName,
         class_level: classLevel,
       },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/confirm`,
     },
   });
 

@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { Plus, Edit, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { Plus, Edit, Trash2, ChevronUp, ChevronDown, Loader2 } from "lucide-react";
 import { FileUpload } from "@/components/ui/file-upload";
+import { fetchYoutubeVideoDuration } from "@/app/actions/youtube";
 
 type Lesson = {
   id: string;
@@ -20,6 +21,8 @@ export function LessonsManager({ courseId }: { courseId: string }) {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState<Partial<Lesson> | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isFetchingDuration, setIsFetchingDuration] = useState(false);
+  const [durationError, setDurationError] = useState("");
   const supabase = createClient();
 
   useEffect(() => {
@@ -36,6 +39,29 @@ export function LessonsManager({ courseId }: { courseId: string }) {
     
     if (data) setLessons(data);
     setLoading(false);
+  };
+
+  const handleFetchDuration = async () => {
+    if (!isEditing?.youtube_url) {
+      setDurationError("Please enter a YouTube URL first");
+      return;
+    }
+    
+    setDurationError("");
+    setIsFetchingDuration(true);
+    
+    try {
+      const result = await fetchYoutubeVideoDuration(isEditing.youtube_url);
+      if (result.error) {
+        setDurationError(result.error);
+      } else if (result.duration !== undefined) {
+        setIsEditing(prev => prev ? { ...prev, duration_min: result.duration } : prev);
+      }
+    } catch (err) {
+      setDurationError("Failed to fetch duration");
+    } finally {
+      setIsFetchingDuration(false);
+    }
   };
 
   const handleSaveLesson = async (e: React.FormEvent) => {
@@ -143,12 +169,35 @@ export function LessonsManager({ courseId }: { courseId: string }) {
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-[var(--muted)] mb-1">YouTube URL</label>
-              <input
-                type="url"
-                value={isEditing.youtube_url || ""}
-                onChange={(e) => setIsEditing({ ...isEditing, youtube_url: e.target.value })}
-                className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
-              />
+              <div className="flex gap-2 items-start">
+                <div className="flex-1">
+                  <input
+                    type="url"
+                    value={isEditing.youtube_url || ""}
+                    onChange={(e) => {
+                      setIsEditing({ ...isEditing, youtube_url: e.target.value });
+                      if (durationError) setDurationError("");
+                    }}
+                    className="w-full bg-[var(--background)] border border-[var(--border)] rounded-md px-3 py-2 text-[var(--foreground)] focus:border-[var(--accent)] focus:outline-none transition-colors duration-200"
+                  />
+                  {durationError && <p className="text-red-500 text-xs mt-1">{durationError}</p>}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleFetchDuration}
+                  disabled={isFetchingDuration || !isEditing.youtube_url}
+                  className="flex items-center justify-center min-w-[140px] bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground)] px-3 py-2 rounded-md hover:bg-[var(--background)] transition-colors duration-200 text-sm font-medium disabled:opacity-50"
+                >
+                  {isFetchingDuration ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin mr-2" />
+                      Fetching...
+                    </>
+                  ) : (
+                    "Fetch Duration"
+                  )}
+                </button>
+              </div>
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-[var(--muted)] mb-1">Lesson Notes (PDF)</label>
