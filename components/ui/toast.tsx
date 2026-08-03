@@ -17,7 +17,7 @@ export function Toast({ message }: { message: string }) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-surface border border-accent/20 text-foreground px-6 py-4 rounded-lg shadow-lg animate-in slide-in-from-top-5 fade-in duration-300">
+    <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-4 bg-surface border border-accent/20 text-foreground px-6 py-4 rounded-lg shadow-lg animate-in slide-in-from-top-5 fade-in duration-300">
       <CheckCircle className="text-green-500 w-6 h-6" />
       <p className="text-base font-medium">{message}</p>
       <button 
