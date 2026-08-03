@@ -17,15 +17,15 @@ export function Toast({ message }: { message: string }) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-surface border border-accent/20 text-foreground px-4 py-3 rounded-lg shadow-lg animate-in slide-in-from-bottom-5 fade-in duration-300">
-      <CheckCircle className="text-green-500 w-5 h-5" />
-      <p className="text-sm font-medium">{message}</p>
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-surface border border-accent/20 text-foreground px-6 py-4 rounded-lg shadow-lg animate-in slide-in-from-top-5 fade-in duration-300">
+      <CheckCircle className="text-green-500 w-6 h-6" />
+      <p className="text-base font-medium">{message}</p>
       <button 
         onClick={() => setIsVisible(false)}
         className="text-muted hover:text-foreground transition-colors ml-2"
         aria-label="Close toast"
       >
-        <X className="w-4 h-4" />
+        <X className="w-5 h-5" />
       </button>
     </div>
   );
