@@ -9,13 +9,20 @@ export default async function ForgotPassword(props: {
   const searchParams = await props.searchParams;
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2 mx-auto pt-20">
+    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-sm justify-center gap-2 mx-auto pt-20">
+      <Link href="/" className="flex items-center justify-center gap-3 mb-6 hover:opacity-90 transition-opacity">
+        <div className="flex items-center justify-center bg-surface border border-border p-1 rounded-full shadow-sm w-12 h-12 shrink-0">
+          <img src="/Logo.png" alt="Breaking Books Logo" className="h-full w-full object-contain rounded-full" />
+        </div>
+        <span className="font-bold text-2xl tracking-tight text-foreground">Breaking Books</span>
+      </Link>
+
       <div className="flex flex-col gap-2 mb-8 items-center text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Reset Password</h1>
         <p className="text-sm text-muted">Enter your email to receive a reset link</p>
       </div>
 
-      <form className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-xl border border-border shadow-md">
+      <form className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-6 rounded-xl border border-border shadow-md">
         <div className="flex flex-col gap-4">
           <Input
             id="email"

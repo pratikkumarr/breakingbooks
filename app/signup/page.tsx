@@ -2,6 +2,7 @@ import Link from "next/link";
 import { signup, signInWithGoogle } from "@/app/auth/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -92,11 +93,10 @@ export default async function Signup(props: {
               required
             />
 
-            <Input
+            <PasswordInput
               id="password"
               name="password"
               label="Password"
-              type="password"
               placeholder="••••••••"
               required
               minLength={6}

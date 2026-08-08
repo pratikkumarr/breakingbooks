@@ -2,6 +2,7 @@ import Link from "next/link";
 import { login, signInWithGoogle } from "@/app/auth/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -62,24 +63,18 @@ export default async function Login(props: {
               placeholder="you@example.com"
               required
             />
-            <div className="flex flex-col gap-1.5 w-full">
-              <div className="flex justify-between items-center">
-                <label className="text-sm font-medium text-foreground" htmlFor="password">
-                  Password
-                </label>
+            <PasswordInput
+              id="password"
+              name="password"
+              label="Password"
+              placeholder="••••••••"
+              required
+              rightLabel={
                 <Link href="/forgot-password" className="text-xs text-accent hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-sm">
                   Forgot password?
                 </Link>
-              </div>
-              <input
-                className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted focus-visible:outline-none focus-visible:border-accent"
-                type="password"
-                name="password"
-                id="password"
-                placeholder="••••••••"
-                required
-              />
-            </div>
+              }
+            />
           </div>
 
           <SubmitButton pendingText="Logging in...">

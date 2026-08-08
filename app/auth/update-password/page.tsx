@@ -2,6 +2,7 @@ import Link from "next/link";
 import { updatePassword } from "@/app/auth/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export default async function UpdatePassword(props: {
   searchParams: Promise<{ error?: string }>;
@@ -25,20 +26,18 @@ export default async function UpdatePassword(props: {
       <div className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-xl border border-border shadow-md">
         <form className="flex flex-col gap-6" action={updatePassword}>
           <div className="flex flex-col gap-4">
-            <Input
+            <PasswordInput
               id="password"
               name="password"
               label="New Password"
-              type="password"
               placeholder="••••••••"
               required
               minLength={6}
             />
-            <Input
+            <PasswordInput
               id="confirmPassword"
               name="confirmPassword"
               label="Confirm Password"
-              type="password"
               placeholder="••••••••"
               required
               minLength={6}
