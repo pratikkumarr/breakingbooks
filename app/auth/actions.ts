@@ -97,3 +97,24 @@ export async function signInWithGoogle() {
     redirect(data.url);
   }
 }
+
+export async function updatePassword(formData: FormData) {
+  const supabase = await createClient();
+
+  const password = formData.get("password") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
+
+  if (password !== confirmPassword) {
+    return redirect("/auth/update-password?error=Passwords do not match");
+  }
+
+  const { error } = await supabase.auth.updateUser({
+    password: password,
+  });
+
+  if (error) {
+    return redirect(`/auth/update-password?error=${encodeURIComponent(error.message)}`);
+  }
+
+  return redirect("/login?message=Password updated successfully. You can now log in.");
+}

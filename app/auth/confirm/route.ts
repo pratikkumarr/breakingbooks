@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
       token_hash,
     })
     if (!error) {
+      if (type === 'recovery') {
+        return NextResponse.redirect(new URL('/auth/update-password', request.url))
+      }
       const redirectUrl = new URL(next, request.url)
       redirectUrl.searchParams.set('verified', 'true')
       return NextResponse.redirect(redirectUrl)

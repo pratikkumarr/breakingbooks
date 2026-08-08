@@ -18,6 +18,13 @@ export default async function Signup(props: {
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2 mx-auto pt-12 pb-12">
+      <Link href="/" className="flex items-center justify-center gap-3 mb-6 hover:opacity-90 transition-opacity">
+        <div className="flex items-center justify-center bg-surface border border-border p-1 rounded-full shadow-sm w-12 h-12 shrink-0">
+          <img src="/Logo.png" alt="Breaking Books Logo" className="h-full w-full object-contain rounded-full" />
+        </div>
+        <span className="font-bold text-2xl tracking-tight text-foreground">Breaking Books</span>
+      </Link>
+
       <div className="flex flex-col gap-2 mb-8 items-center text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Create an Account</h1>
         <p className="text-sm text-muted">Join Breaking Books today</p>
