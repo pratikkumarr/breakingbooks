@@ -21,9 +21,20 @@ export function LessonsManager({ courseId }: { courseId: string }) {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState<Partial<Lesson> | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [isFetchingDuration, setIsFetchingDuration] = useState(false);
   const [durationError, setDurationError] = useState("");
   const supabase = createClient();
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (isSaving) {
+      timeoutId = setTimeout(() => setShowLoading(true), 200);
+    } else {
+      setShowLoading(false);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isSaving]);
 
   useEffect(() => {
     fetchLessons();
@@ -230,9 +241,14 @@ export function LessonsManager({ courseId }: { courseId: string }) {
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 py-2 text-sm bg-accent text-background font-medium rounded-md hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50"
+              className="inline-flex items-center justify-center px-4 py-2 text-sm bg-accent text-background font-medium rounded-md hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50 min-w-[120px]"
             >
-              {isSaving ? "Saving..." : isEditing.id ? "Save Changes" : "Add Lesson"}
+              {showLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : isEditing.id ? "Save Changes" : "Add Lesson"}
             </button>
           </div>
         </form>

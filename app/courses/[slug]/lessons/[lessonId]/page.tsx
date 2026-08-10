@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { toggleLessonProgress } from "@/app/courses/actions";
 import { FileText, ArrowLeft, CheckCircle2, Circle, Play } from "lucide-react";
+import { MarkCompleteButton } from "@/components/MarkCompleteButton";
 
 function extractYouTubeId(url: string) {
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
@@ -112,22 +113,7 @@ export default async function LessonViewer(props: {
             {user ? (
               <form action={handleToggleComplete} className="flex items-center">
                 <input type="hidden" name="completed" value={String(isCompleted)} />
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md min-h-[44px] border border-border bg-background hover:bg-surface text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200 cursor-pointer"
-                >
-                  {isCompleted ? (
-                    <>
-                      <CheckCircle2 className="w-5 h-5 text-accent" />
-                      <span className="text-foreground">Completed</span>
-                    </>
-                  ) : (
-                    <>
-                      <Circle className="w-5 h-5 text-muted" />
-                      <span className="text-foreground">Mark Complete</span>
-                    </>
-                  )}
-                </button>
+                <MarkCompleteButton isCompleted={isCompleted} />
               </form>
             ) : (
               <Link

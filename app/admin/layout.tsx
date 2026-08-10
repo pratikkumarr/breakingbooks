@@ -42,7 +42,7 @@ export default async function AdminLayout({
           <form action="/auth/signout" method="POST">
             <button
               type="submit"
-              className="flex items-center justify-center md:justify-start gap-3 px-3 py-2 w-full rounded-md text-red-400 hover:text-red-300 hover:bg-[var(--background)] transition-colors duration-200 min-h-[44px]"
+              className="flex items-center justify-center md:justify-start gap-3 px-4 py-2 w-full rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-200 min-h-[44px] cursor-pointer"
             >
               <LogOut size={18} />
               Sign Out

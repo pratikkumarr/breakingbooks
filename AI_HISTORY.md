@@ -1,6 +1,7 @@
 # AI Tools Modification History
 
 This document serves as a reference for changes and features implemented by AI coding assistants in this project. Keeping a record helps future AI sessions understand the context of recent architectural decisions, additions, and bug fixes.
+AI Tool must add every change in this file
 
 ## Date: 2026-08-03
 

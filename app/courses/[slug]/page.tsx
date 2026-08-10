@@ -152,7 +152,7 @@ export default async function CourseDetails(props: {
               <Link
                 key={lesson.id}
                 href={`/courses/${slug}/lessons/${lesson.id}`}
-                className="flex items-center gap-4 bg-surface border border-border rounded-xl p-4 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group opacity-0 animate-fade-in-up"
+                className="flex items-center gap-4 bg-surface border border-border rounded-xl p-4 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group opacity-0 animate-fade-in-up cursor-pointer"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className={`flex items-center justify-center w-8 h-8 rounded-full border text-sm font-medium transition-colors duration-200 ${isCompleted ? 'bg-accent border-accent text-background' : 'bg-background border-border text-muted group-hover:border-accent group-hover:text-accent'}`}>

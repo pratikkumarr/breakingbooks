@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { FileUpload } from "@/components/ui/file-upload";
 
@@ -33,7 +34,18 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
     }
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (isSubmitting) {
+      timeoutId = setTimeout(() => setShowLoading(true), 200);
+    } else {
+      setShowLoading(false);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isSubmitting]);
 
   const generateSlug = (title: string) => {
     return title
@@ -221,9 +233,14 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-accent text-background px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50"
+          className="inline-flex items-center justify-center bg-accent text-background px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50 min-w-[140px]"
         >
-          {isSubmitting ? "Saving..." : initialData?.id ? "Save Changes" : "Create Course"}
+          {showLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Saving...
+            </>
+          ) : initialData?.id ? "Save Changes" : "Create Course"}
         </button>
       </div>
     </form>
