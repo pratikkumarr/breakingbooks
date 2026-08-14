@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: "Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.",
   icons: {
     icon: "/Logo.png",
+    apple: "/Logo.png",
   },
 };
 
@@ -32,6 +33,20 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Breaking Books",
+              "url": "https://breakingbooks.in",
+              "logo": "https://breakingbooks.in/Logo.png"
+            })
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
         <NextTopLoader color="var(--accent)" height={2} showSpinner={false} />
         <Navbar />
