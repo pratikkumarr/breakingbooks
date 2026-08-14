@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { logout } from "@/app/auth/actions";
 import { SubmitButton } from "@/components/ui/submit-button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -31,7 +32,8 @@ export default async function Dashboard() {
         id,
         slug,
         title,
-        description
+        description,
+        thumbnail_url
       )
     `)
     .eq("user_id", user.id);
@@ -133,7 +135,18 @@ export default async function Dashboard() {
               }
 
               return (
-                <div key={enrollment.id} className="bg-surface flex flex-col rounded-xl border border-border p-6 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-colors duration-200">
+                <div key={enrollment.id} className="bg-surface flex flex-col rounded-xl border border-border p-6 hover:border-accent hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                  {course.thumbnail_url && (
+                    <div className="w-full aspect-video mb-4 rounded-md overflow-hidden border border-border relative">
+                      <Image 
+                        src={course.thumbnail_url} 
+                        alt={course.title} 
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover" 
+                      />
+                    </div>
+                  )}
                   <h3 className="text-lg font-semibold text-foreground mb-1">{course.title}</h3>
                   <p className="text-sm text-muted line-clamp-2 mb-6 flex-1">{course.description}</p>
                   
