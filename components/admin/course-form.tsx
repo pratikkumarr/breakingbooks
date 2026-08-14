@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { FileUpload } from "@/components/ui/file-upload";
+import { Toast } from "@/components/ui/toast";
 
 type Course = {
   id?: string;
@@ -35,6 +36,7 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
@@ -88,6 +90,8 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
           .update(payload)
           .eq("id", initialData.id);
         if (error) throw error;
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5100);
         router.refresh();
       } else {
         const { data, error } = await supabase
@@ -96,6 +100,8 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
           .select()
           .single();
         if (error) throw error;
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5100);
         router.push(`/admin/courses/${data.id}`);
       }
     } catch (err: any) {
@@ -107,7 +113,9 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-[var(--surface)] p-6 rounded-md border border-[var(--border)]">
+    <>
+      {showToast && <Toast message={initialData?.id ? "Course updated successfully!" : "Course created successfully!"} />}
+      <form onSubmit={handleSubmit} className="space-y-6 bg-[var(--surface)] p-6 rounded-md border border-[var(--border)]">
       {error && (
         <div className="p-3 bg-red-900/30 border border-red-900/50 text-red-400 rounded-md text-sm">
           {error}
@@ -244,5 +252,6 @@ export function CourseForm({ initialData }: { initialData?: Partial<Course> }) {
         </button>
       </div>
     </form>
+    </>
   );
 }

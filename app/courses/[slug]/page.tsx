@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { enrollInCourse } from "@/app/courses/actions";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { EnrollButton } from "./EnrollButton";
 import { CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -129,17 +129,9 @@ export default async function CourseDetails(props: {
         <p className="text-muted mt-6 text-lg whitespace-pre-wrap leading-relaxed">{course.description}</p>
         
         <div className="mt-8">
-          {isEnrolled ? (
-            <div className="inline-flex items-center justify-center rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-muted cursor-default">
-              You are enrolled
-            </div>
-          ) : (
-            <form action={handleEnroll}>
-              <SubmitButton pendingText="Enrolling...">
-                Enroll in Course
-              </SubmitButton>
-            </form>
-          )}
+          <form action={handleEnroll}>
+            <EnrollButton isEnrolled={isEnrolled} />
+          </form>
         </div>
       </div>
 

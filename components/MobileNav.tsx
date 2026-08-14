@@ -19,10 +19,10 @@ export function MobileNav({ user, role }: { user: any, role: string | null }) {
 
       {isOpen && (
         <div className="absolute top-16 left-0 right-0 bg-background border-b border-border p-4 flex flex-col gap-4 shadow-lg z-50">
-          <Link href="/courses" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
+          <Link href="/courses" onClick={() => setTimeout(() => setIsOpen(false), 50)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
             Courses
           </Link>
-          <Link href={user ? "/dashboard" : "/login"} onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md" title={!user ? "Log in to view your courses" : undefined}>
+          <Link href={user ? "/dashboard" : "/login"} onClick={() => setTimeout(() => setIsOpen(false), 50)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md" title={!user ? "Log in to view your courses" : undefined}>
             My Courses
           </Link>
           
@@ -30,17 +30,17 @@ export function MobileNav({ user, role }: { user: any, role: string | null }) {
           
           {!user ? (
             <div className="flex flex-col gap-2">
-              <Link href="/login" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
+              <Link href="/login" onClick={() => setTimeout(() => setIsOpen(false), 50)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
                 Login
               </Link>
-              <Link href="/signup" onClick={() => setIsOpen(false)} className="text-base font-medium bg-accent text-background px-4 py-3 rounded-md text-center min-h-[44px]">
+              <Link href="/signup" onClick={() => setTimeout(() => setIsOpen(false), 50)} className="text-base font-medium bg-accent text-background px-4 py-3 rounded-md text-center min-h-[44px]">
                 Sign Up
               </Link>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
               {role === "admin" && (
-                <Link href="/admin" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
+                <Link href="/admin" onClick={() => setTimeout(() => setIsOpen(false), 50)} className="text-base font-medium text-foreground py-3 px-2 min-h-[44px] hover:bg-surface rounded-md">
                   Admin
                 </Link>
               )}

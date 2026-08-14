@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import { Plus, Edit, Trash2, ChevronUp, ChevronDown, Loader2 } from "lucide-react";
 import { FileUpload } from "@/components/ui/file-upload";
 import { fetchYoutubeVideoDuration } from "@/app/actions/youtube";
+import { Toast } from "@/components/ui/toast";
 
 type Lesson = {
   id: string;
@@ -22,6 +23,8 @@ export function LessonsManager({ courseId }: { courseId: string }) {
   const [isEditing, setIsEditing] = useState<Partial<Lesson> | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [isFetchingDuration, setIsFetchingDuration] = useState(false);
   const [durationError, setDurationError] = useState("");
   const supabase = createClient();
@@ -94,6 +97,9 @@ export function LessonsManager({ courseId }: { courseId: string }) {
       if (!error) {
         setLessons(lessons.map(l => l.id === isEditing.id ? { ...l, ...payload } as Lesson : l));
         setIsEditing(null);
+        setToastMessage("Lesson updated successfully!");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5100);
       } else {
         alert("Error updating lesson");
       }
@@ -102,6 +108,9 @@ export function LessonsManager({ courseId }: { courseId: string }) {
       if (!error && data) {
         setLessons([...lessons, data as Lesson]);
         setIsEditing(null);
+        setToastMessage("Lesson created successfully!");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5100);
       } else {
         alert("Error creating lesson");
       }
@@ -141,7 +150,9 @@ export function LessonsManager({ courseId }: { courseId: string }) {
   if (loading) return <div className="text-[var(--muted)]">Loading lessons...</div>;
 
   return (
-    <div className="space-y-4">
+    <>
+      {showToast && <Toast message={toastMessage} />}
+      <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-[var(--foreground)]">Lessons</h2>
         {!isEditing && (
@@ -289,5 +300,6 @@ export function LessonsManager({ courseId }: { courseId: string }) {
         </div>
       )}
     </div>
+    </>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { submitContactForm } from "./actions";
+import { Toast } from "@/components/ui/toast";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -15,25 +16,24 @@ export default function ContactForm({
 }) {
   const [state, formAction] = useActionState(submitContactForm, { success: false, error: null });
 
-  if (state.success) {
-    return (
-      <div className="bg-surface border border-accent/20 rounded-lg p-8 text-center shadow-sm">
-        <h2 className="text-2xl font-semibold text-accent mb-2">Message Sent!</h2>
-        <p className="text-muted">
-          Thank you for reaching out. We have received your message and will get back to you shortly.
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-6 text-sm text-foreground font-medium hover:text-accent transition-colors duration-200"
-        >
-          Send another message
-        </button>
-      </div>
-    );
-  }
+  const formRef = useRef<HTMLFormElement>(null);
+  const [showToast, setShowToast] = useState(false);
+  const prevState = useRef(state.success);
+
+  useEffect(() => {
+    if (!prevState.current && state.success) {
+      setShowToast(true);
+      formRef.current?.reset();
+      const timer = setTimeout(() => setShowToast(false), 5100);
+      return () => clearTimeout(timer);
+    }
+    prevState.current = state.success;
+  }, [state.success]);
 
   return (
-    <form action={isLoggedIn ? formAction : undefined} className="bg-surface border border-border rounded-lg p-8 shadow-sm flex flex-col gap-6">
+    <>
+      {showToast && <Toast message="Message sent!" />}
+      <form ref={formRef} action={isLoggedIn ? formAction : undefined} className="bg-surface border border-border rounded-lg p-8 shadow-sm flex flex-col gap-6">
       {state.error && (
         <div className="bg-background text-red-500 text-sm border border-red-500/20 p-4 rounded-md">
           {state.error}
@@ -77,5 +77,6 @@ export default function ContactForm({
         </Link>
       )}
     </form>
+    </>
   );
 }
