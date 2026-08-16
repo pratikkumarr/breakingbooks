@@ -1,56 +1,44 @@
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import { TypewriterText } from "@/components/TypewriterText";
-import { Toast } from "@/components/ui/toast";
+import { VerifyToast } from "@/components/VerifyToast";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Home | Breaking Books",
   description: "Master CBSE IT (Code 402) and Computer Science for Classes 9-12 with our free, high-quality lessons.",
 };
 
-export default async function Home(props: { searchParams?: Promise<{ verified?: string }> }) {
-  const searchParams = props.searchParams ? await props.searchParams : undefined;
-  const isVerified = searchParams?.verified === "true";
+export default async function Home() {
+  const supabase = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: {
+        fetch: (url, options) => {
+          return fetch(url, {
+            ...options,
+            next: { revalidate: 300 }
+          });
+        }
+      }
+    }
+  );
 
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let { data: courses, error } = await supabase
+  const { data: courses } = await supabase
     .from("courses")
     .select("id, slug, title, description, thumbnail_url, subject, class_level")
     .eq("published", true)
-    .eq("featured", true)
+    .order("featured", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(4);
 
-  // Fallback to recent published courses to fill remaining slots
-  if (!error && (!courses || courses.length < 4)) {
-    const featuredIds = courses ? courses.map((c) => c.id) : [];
-    const limit = 4 - (courses ? courses.length : 0);
-    
-    let query = supabase
-      .from("courses")
-      .select("id, slug, title, description, thumbnail_url, subject, class_level")
-      .eq("published", true)
-      .order("created_at", { ascending: false })
-      .limit(limit);
-
-    if (featuredIds.length > 0) {
-      query = query.not("id", "in", `(${featuredIds.join(",")})`);
-    }
-
-    const { data: recentCourses } = await query;
-    if (recentCourses) {
-      courses = [...(courses || []), ...recentCourses];
-    }
-  }
-
   return (
     <div className="flex-1 w-full flex flex-col items-center relative">
-      {isVerified && <Toast message="Email verified! You're now logged in." />}
+      <VerifyToast />
       {/* Absolute Ambient Background Texture starting from the top */}
       <div className="absolute top-0 inset-x-0 h-[700px] md:h-[800px] z-[-1] overflow-hidden pointer-events-none select-none">
         <Image 
@@ -58,6 +46,7 @@ export default async function Home(props: { searchParams?: Promise<{ verified?: 
           alt="Breaking Books Ambient Texture" 
           fill
           priority
+          quality={50}
           className="object-cover object-top opacity-15"
         />
         {/* Gradient overlay to smoothly taper the image into the background color */}
