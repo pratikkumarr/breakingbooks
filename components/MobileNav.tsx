@@ -45,7 +45,7 @@ export function MobileNav({ user, role }: { user: any, role: string | null }) {
                 </Link>
               )}
               <form action="/auth/signout" method="POST" className="w-full">
-                <button type="submit" className="text-base font-medium bg-red-600 text-white hover:bg-red-700 py-3 px-4 w-full text-center min-h-[44px] rounded-md transition-all duration-200 cursor-pointer">
+                <button type="submit" className="text-base font-medium text-red-500 bg-red-500/10 hover:bg-red-500/20 py-3 px-4 w-full text-center min-h-[44px] rounded-md transition-all duration-200 cursor-pointer">
                   Log Out
                 </button>
               </form>

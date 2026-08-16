@@ -32,6 +32,16 @@ export default async function Login(props: {
       </div>
 
       <div className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-xl border border-border shadow-md">
+        {searchParams?.message && (
+          <p className={`p-4 text-center text-sm rounded-md border ${
+            searchParams.message.includes('authenticate') || searchParams.message.includes('error') 
+              ? 'bg-red-500/10 border-red-500/20 text-red-500' 
+              : 'bg-background border-border text-foreground'
+          }`}>
+            {searchParams.message}
+          </p>
+        )}
+
         <form action={signInWithGoogle}>
           <SubmitButton
             variant="outline"
@@ -82,15 +92,6 @@ export default async function Login(props: {
             Log in
           </SubmitButton>
 
-          {searchParams?.message && (
-            <p className={`mt-4 p-4 text-center text-sm rounded-md border ${
-              searchParams.message.includes('authenticate') || searchParams.message.includes('error') 
-                ? 'bg-red-500/10 border-red-500/20 text-red-500' 
-                : 'bg-background border-border text-foreground'
-            }`}>
-              {searchParams.message}
-            </p>
-          )}
         </form>
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Loader2 } from "lucide-react";
 
 interface SubmitButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,23 +17,6 @@ export function SubmitButton({
   ...props
 }: SubmitButtonProps) {
   const { pending } = useFormStatus();
-  const [showLoading, setShowLoading] = useState(false);
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    if (pending) {
-      timeoutId = setTimeout(() => {
-        setShowLoading(true);
-      }, 200);
-    } else {
-      setShowLoading(false);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [pending]);
 
   let variantClasses = "";
   if (variant === "default") {
@@ -51,7 +34,7 @@ export function SubmitButton({
       className={`inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 transition-colors duration-200 cursor-pointer ${variantClasses} ${className || ""}`}
       {...props}
     >
-      {showLoading ? (
+      {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           {pendingText}

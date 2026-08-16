@@ -22,6 +22,8 @@ export const metadata: Metadata = {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NextTopLoader from "nextjs-toploader";
+import { Suspense } from "react";
+import { LoginToastHandler } from "@/components/LoginToastHandler";
 
 export default function RootLayout({
   children,
@@ -49,6 +51,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-sans">
         <NextTopLoader color="var(--accent)" height={2} showSpinner={false} />
+        <Suspense fallback={null}>
+          <LoginToastHandler />
+        </Suspense>
         <Navbar />
         <main className="flex-1 flex flex-col">
           {children}

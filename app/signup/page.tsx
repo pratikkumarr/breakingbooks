@@ -32,6 +32,22 @@ export default async function Signup(props: {
       </div>
 
       <div className="flex-1 flex flex-col w-full justify-center gap-6 text-foreground bg-surface p-8 rounded-xl border border-border shadow-md">
+        {searchParams?.message && (
+          <p className="p-4 bg-background text-foreground text-center text-sm border border-border rounded-md">
+            {searchParams.message}
+          </p>
+        )}
+        {searchParams?.error === "already_registered" && (
+          <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-center text-sm rounded-md">
+            This email is already registered. <Link href="/login" className="underline font-medium hover:text-red-400">Please log in instead.</Link>
+          </div>
+        )}
+        {searchParams?.success === "verification_sent" && (
+          <div className="p-4 bg-green-500/10 border border-green-500/20 text-green-500 text-center text-sm rounded-md">
+            Verification link sent! Please check your email (including spam folder) to confirm your account before logging in.
+          </div>
+        )}
+
         <form action={signInWithGoogle}>
           <SubmitButton
             variant="outline"
@@ -108,21 +124,6 @@ export default async function Signup(props: {
             Sign up
           </SubmitButton>
 
-          {searchParams?.message && (
-            <p className="mt-4 p-4 bg-background text-foreground text-center text-sm border border-border rounded-md">
-              {searchParams.message}
-            </p>
-          )}
-          {searchParams?.error === "already_registered" && (
-            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-center text-sm rounded-md">
-              This email is already registered. <Link href="/login" className="underline font-medium hover:text-red-400">Please log in instead.</Link>
-            </div>
-          )}
-          {searchParams?.success === "verification_sent" && (
-            <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 text-green-500 text-center text-sm rounded-md">
-              Verification link sent! Please check your email (including spam folder) to confirm your account before logging in.
-            </div>
-          )}
         </form>
       </div>
 

@@ -55,7 +55,7 @@ export default async function Navbar() {
                 </Link>
               )}
               <form action={logout}>
-                <button type="submit" className="text-sm font-medium bg-red-600 text-white hover:bg-red-700 rounded-md transition-all duration-200 flex items-center gap-1 min-h-[44px] px-4 cursor-pointer">
+                <button type="submit" className="text-sm font-medium text-red-500 bg-red-500/10 hover:bg-red-500/20 rounded-md transition-all duration-200 flex items-center gap-1 min-h-[44px] px-4 cursor-pointer">
                   Log Out
                 </button>
               </form>
