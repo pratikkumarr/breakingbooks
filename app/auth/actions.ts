@@ -4,6 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
+const getOrigin = () => {
+  let url = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL ?? 'http://localhost:3000';
+  url = url.startsWith('http') ? url : `https://${url}`;
+  return url.trim().replace(/\/+$/, '');
+};
+
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
@@ -39,7 +45,7 @@ export async function signup(formData: FormData) {
         full_name: fullName,
         class_level: classLevel,
       },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/confirm`,
+      emailRedirectTo: `${getOrigin()}/auth/confirm`,
     },
   });
 
@@ -66,7 +72,7 @@ export async function resetPassword(formData: FormData) {
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/update-password`,
+    redirectTo: `${getOrigin()}/auth/update-password`,
   });
 
   if (error) {
@@ -84,12 +90,11 @@ export async function logout() {
 
 export async function signInWithGoogle() {
   const supabase = await createClient();
-  const origin = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${getOrigin()}/auth/callback`,
     },
   });
 
