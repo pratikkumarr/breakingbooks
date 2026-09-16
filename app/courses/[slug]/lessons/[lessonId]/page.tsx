@@ -132,10 +132,13 @@ export default async function LessonViewer(props: {
           <div className="w-full md:w-80 shrink-0">
             <div className="bg-surface border border-border rounded-xl p-6 sticky top-24">
               <h2 className="text-lg font-semibold text-foreground mb-4">Resources</h2>
+              {/* Download is routed through /api/pdf-download so the browser saves
+                  the file as "<lesson-title>.pdf" rather than the UUID-based
+                  Supabase Storage filename. The `download` attribute alone is
+                  ignored by browsers for cross-origin URLs. */}
               <a
-                href={lesson.pdf_url}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/api/pdf-download?url=${encodeURIComponent(lesson.pdf_url)}&filename=${encodeURIComponent(lesson.title)}`}
+                download
                 className="flex items-center gap-3 p-3 rounded-md border border-border bg-background hover:border-accent group transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <div className="flex items-center justify-center w-10 h-10 rounded bg-surface border border-border group-hover:border-accent group-hover:text-accent text-muted transition-colors duration-200">
