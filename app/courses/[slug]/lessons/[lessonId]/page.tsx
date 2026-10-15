@@ -5,6 +5,30 @@ import { toggleLessonProgress } from "@/app/courses/actions";
 import { FileText, ArrowLeft, CheckCircle2, Circle, Play } from "lucide-react";
 import { MarkCompleteButton } from "@/components/MarkCompleteButton";
 
+type Resource = { url: string; label: string };
+
+/**
+ * Parse the pdf_url column into a Resource array.
+ * Handles three formats stored in the single column:
+ *   - JSON array  (new)  : [{"url":"…","label":"…"}]
+ *   - Plain URL   (legacy): "https://…"
+ *   - Empty / null        : no resources
+ */
+function parseResources(raw: string | null | undefined): Resource[] {
+  if (!raw) return [];
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+  if (trimmed.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) return parsed as Resource[];
+    } catch {
+      // fall through to legacy handling
+    }
+  }
+  return [{ url: trimmed, label: "" }];
+}
+
 function extractYouTubeId(url: string) {
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
   return match ? match[1] : null;
@@ -128,30 +152,44 @@ export default async function LessonViewer(props: {
           </div>
         </div>
 
-        {lesson.pdf_url && (
-          <div className="w-full md:w-80 shrink-0">
-            <div className="bg-surface border border-border rounded-xl p-6 sticky top-24">
-              <h2 className="text-lg font-semibold text-foreground mb-4">Resources</h2>
-              {/* Download is routed through /api/pdf-download so the browser saves
-                  the file as "<lesson-title>.pdf" rather than the UUID-based
-                  Supabase Storage filename. The `download` attribute alone is
-                  ignored by browsers for cross-origin URLs. */}
-              <a
-                href={`/api/pdf-download?url=${encodeURIComponent(lesson.pdf_url)}&filename=${encodeURIComponent(lesson.title)}`}
-                download
-                className="flex items-center gap-3 p-3 rounded-md border border-border bg-background hover:border-accent group transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded bg-surface border border-border group-hover:border-accent group-hover:text-accent text-muted transition-colors duration-200">
-                  <FileText className="w-5 h-5" />
+        {(() => {
+          const resources = parseResources(lesson.pdf_url);
+          if (resources.length === 0) return null;
+          return (
+            <div className="w-full md:w-80 shrink-0">
+              <div className="bg-surface border border-border rounded-xl p-6 sticky top-24">
+                <h2 className="text-lg font-semibold text-foreground mb-4">Resources</h2>
+                {/* Each download is routed through /api/pdf-download so the browser
+                    saves the file as "<label or lesson-title>.pdf" rather than the
+                    UUID-based Supabase Storage filename. The `download` attribute
+                    alone is ignored by browsers for cross-origin URLs. */}
+                <div className="flex flex-col gap-2">
+                  {resources.map((resource, i) => {
+                    const cardTitle = resource.label.trim() || "Lesson PDF";
+                    const downloadFilename = resource.label.trim() || lesson.title;
+                    return (
+                      <a
+                        key={i}
+                        href={`/api/pdf-download?url=${encodeURIComponent(resource.url)}&filename=${encodeURIComponent(downloadFilename)}`}
+                        download
+                        className="flex items-center gap-3 p-3 rounded-md border border-border bg-background hover:border-accent group transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                      >
+                        <div className="flex items-center justify-center w-10 h-10 rounded bg-surface border border-border group-hover:border-accent group-hover:text-accent text-muted transition-colors duration-200 shrink-0">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors duration-200 truncate">{cardTitle}</span>
+                          <span className="text-xs text-muted">Download Resource</span>
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors duration-200">Lesson PDF</span>
-                  <span className="text-xs text-muted">Download Resource</span>
-                </div>
-              </a>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
+
       </div>
     </div>
   );
